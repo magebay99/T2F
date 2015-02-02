@@ -1,0 +1,59 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php 
+$header = Mage::getModel('titan/main')->getBlockConfig('header');
+?>
+<div class="<?php echo $header['width_config'];?>"  data-block='header'>
+<div class="t2-header">
+	<header>
+		<?php if($this->getChildHtml('headerTop')){ ?>
+		<div class="t2-header-top navbar-top" data-block="header-top">
+			<div class="t2-container">
+				<?php echo $this->getChildHtml('headerTop'); ?> 
+			</div>
+		</div>
+		<?php } ?>
+		<?php if($this->getChildHtml('headerMid')){ ?>
+		<div class="t2-header-mid" data-block="header-mid">
+			<div class="t2-container">
+				<?php echo $this->getChildHtml('headerMid'); ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php if($this->getChildHtml('headerBottom')){ ?>
+		<div class="t2-header-bottom menuWrap" data-block="header-bottom">
+			<div class="t2-container">
+			<?php echo $this->getChildHtml('headerBottom'); ?>
+			</div>
+		</div>
+		<?php } ?>
+	</header>
+</div><!--./ End Header -->
+</div>

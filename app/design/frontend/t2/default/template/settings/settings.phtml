@@ -1,0 +1,95 @@
+<?php
+/* Enable in T2 Theme > Settings > General > Theme Settings */
+?>
+<div class="themeControll active">
+<h3 style="width: 60px; font-size: 10px; line-height: 12px;" class="uppercase color-white text-center"> Select Style </h3>
+<a onclick="swapStyleSheet('<?php echo $this->getSkinUrl('assets/css/skin-1.css');?>')" style="background:#4ec67f;border-top: 12px solid #27AE60;"> </a>
+<a onclick="swapStyleSheet('<?php echo $this->getSkinUrl('assets/css/skin-2.css');?>')" style="background:#1ABC9C;border-top: 12px solid #16A085"> </a>
+<a onclick="swapStyleSheet('<?php echo $this->getSkinUrl('assets/css/skin-3.css');?>')" style="background:#3498DB;border-top: 12px solid #2980B9"> </a>
+<a onclick="swapStyleSheet('<?php echo $this->getSkinUrl('assets/css/skin-4.css');?>')" style="background:#9B59B6;border-top: 12px solid #9149AF"> </a>
+<a onclick="swapStyleSheet('<?php echo $this->getSkinUrl('assets/css/skin-5.css');?>')" style="background:#E74C3C;border-top: 12px solid #C0392B"> </a>
+<p class="tbtn"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABGklEQVR4AZXUP8vTUBQH4KclWsRBcBE6VOwkCCK1/QAuLoK7Q+mggkPhLfgJnDIXOrm7O76QobsUP0OXLkohrTi1eF1CufTS0Dw/COSckHvyt6Wh7EJ1ioWjK+WCICfVlmIIRmq9tXarq2OsFAQ7E3fx2BevJdaCYOu3EGXjq7+Cg+fO3Aq1Sdbo2tYc/l3yADqnYUo3nnnqUzTeE4lx1drpR6v+qqpTkUyuUFatz2LvT6cp5DJgJkQZiPWFKDPaGsqw8MjQyAPwyk+g2gP2flhZiHyoveiPEg/9u3hbS/cl5sLFlHrODITaLM9f7z8OOPpmI1bagZcSb8y9wB3vlNUgE/f0LO3N1CoEQXH9F7c6bROtpj+Blob+A+R2tLeiJrWUAAAAAElFTkSuQmCC66808bba94c7bbeb4d3cc191629e19b9"/></p>
+</div>
+<style>
+
+	.themeControll {
+		background:#fff;
+		height: auto;
+		width:100px;
+		position:fixed;
+		right:0;
+		padding:20px;
+		top:20%;
+		z-index:999999;
+		-webkit-transform: translateX(0);
+		-moz-transform: translateX(0);
+		-o-transform: translateX(0);
+		-ms-transform: translateX(0);
+		transform: translateX(0);
+		opacity: 1;
+		-ms-filter: none;
+		filter: none;
+		-webkit-transition: opacity .5s linear, -webkit-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-moz-transition: opacity .5s linear, -moz-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-o-transition: opacity .5s linear, -o-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-ms-transition: opacity .5s linear, -ms-transform .7s cubic-bezier(.56, .48, 0, .99);
+		transition: opacity .5s linear, transform .7s cubic-bezier(.56, .48, 0, .99);
+	}
+	
+	.themeControll.active {
+		display: block;
+		-webkit-transform: translateX(100px);
+		-moz-transform: translateX(100px);
+		-o-transform: translateX(100px);
+		-ms-transform: translateX(1020px);
+		transform: translateX(100px);
+		-webkit-transition: opacity .5s linear, -webkit-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-moz-transition: opacity .5s linear, -moz-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-o-transition: opacity .5s linear, -o-transform .7s cubic-bezier(.56, .48, 0, .99);
+		-ms-transition: opacity .5s linear, -ms-transform .7s cubic-bezier(.56, .48, 0, .99);
+		transition: opacity .5s linear, transform .7s cubic-bezier(.56, .48, 0, .99);
+	
+	}
+	
+	.themeControll a {
+    border-radius: 3px;
+    clear: both;
+    display: block;
+    height: 25px;
+    margin-bottom: 4px;
+    width: 50px;
+	}
+	
+	.tbtn {
+	  background: none repeat scroll 0 0 #fff;
+	  color: #ffffff !important;
+	  cursor: pointer;
+	  font-size: 30px;
+	  height: auto;
+	  left: -40px;
+	  margin: 0;
+	  padding: 0 0 5px 10px;
+	  position: absolute;
+	  top: 0;
+	  width: 40px;
+	}
+   
+   	@media (max-width: 780px) {
+    .themeControll,.tbtn {
+        display:none;
+    }
+	 
+    
+}
+	
+	</style>
+<script type="text/javascript">
+function swapStyleSheet(sheet){
+document.getElementById('pagestyle').setAttribute('href', sheet);
+}
+jQuery(document).ready(function($) {
+    $(".tbtn").click(function() {
+        $(".themeControll").toggleClass("active");
+    });
+});
+</script>

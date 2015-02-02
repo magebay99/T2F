@@ -1,0 +1,309 @@
+<?php 
+$boxesPath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . "skin/adminhtml/default/default/boxes.css";
+$params = $this->getRequest()->getParams();
+//Zend_Debug::dump($params);
+$formData = array();
+$formData['id'] = NULL;
+if ($this->getRequest()->getParam("new") == NULL) {
+	$formData = Mage::getSingleton('core/session')->getFormData();
+}
+if ($this->getRequest()->getParam("id")) {
+	$formData = Mage::getModel("titan/titanblock")->load($this->getRequest()->getParam("id"))->getData();
+}
+?>
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('titan/bootstrap/css/bootstrap.css') ?>"/>  -->
+<link rel="stylesheet" type="text/css" href="<?php echo $boxesPath ?>"/>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('prototype/prototype.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('prototype/validation.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getJsUrl("scriptaculous/effects.js") ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('varien/form.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('assets/js/jquery/jquery-latest.min.js') ?>"></script>
+<style>
+	.main-cols .messages li {
+		list-style: none;
+	}
+	.main-cols .messages ul {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.main-cols .form-list p.note strong{color:red;}
+	.main-cols .form-list label  {
+	  color: rgb(235, 94, 0);
+	  font-size: 16px;
+	  text-transform: capitalize;
+	}
+	.main-cols .form-list p.note {
+	  color: rgb(69, 69, 69);
+	  font-size: 13px;
+	  font-style: italic;
+	  white-space: nowrap;
+	}
+	.main-cols .form-list td.label {
+		vertical-align: top;
+	}
+	.main-cols  .form-list td.value select.multiselect {
+	  max-height: 120px;
+	  width: 280px;
+	}
+	.main-cols  .form-list td.value input.input-text,.main-cols   .form-list td.value textarea,.main-cols  .form-list td.value select {color:rgba(0, 0, 0, 0.9);}
+	.main-cols  .form-list td.value input.input-text:focus{color:red;}
+	<?php if (isset($params['area'])) : ?>
+	body {
+		padding: 0px 45px;
+	}
+	<?php endif; ?>
+</style>
+<div id="content" class="main-cols">
+	<div class="main-col-inner">
+		<div id="messages">
+		<?php echo $this->getMessagesBlock()->toHtml(); ?>
+		</div>
+		<div class="content-header">
+			<h3 class="icon-head head-adminhtml-titanblock">
+				<?php if ($formData['id'] == NULL) : ?>
+				<?php echo $this->__("New Snippet"); ?>
+				<?php else : ?>
+				Edit "<?php echo $formData['title']; ?>"
+				<?php endif; ?>
+			</h3>
+			<p class="form-buttons">
+				<button style="" onclick="location.reload()" class="scalable " type="button" title="Reset">
+					<span><span><span>Reset</span></span></span>
+				</button>
+				<button style="" onclick="editForm.submit();" class="scalable save" type="button" title="Save Block">
+					<span><span><span>SAVE</span></span></span>
+				</button>
+				<?php if (isset($params['area']) && $params['area'] == "transforming") :?>
+				<button class="scalable close-iframe" type="button" title="Close">
+					<span><span><span>Close</span></span></span>
+				</button>
+				<?php endif; ?>
+			</p>
+		</div>
+		<div class="entry-edit">
+			<form enctype="multipart/form-data" method="post"
+				action="<?php echo $this->getBaseUrl() . "titan/block/save/" ?>"
+				id="edit_form">
+				<input type="hidden" name="id" value="<?php echo $formData['id'] ?>"/>
+				<?php if (isset($params['area']) && $params['area'] == "transforming") :?>
+				<input type="hidden" name="area" value="<?php echo $params['area'] ?>"/>
+				<?php endif; ?>
+				<div style="" id="titan_tabs_form_section_content">
+					<div class="entry-edit">
+						<div class="entry-edit-head">
+							<h4 class="icon-head head-edit-form fieldset-legend">General Information</h4>
+							<div class="form-buttons"></div>
+						</div>
+						<div id="titanblock_form" class="fieldset ">
+							<div class="hor-scroll">
+								<p>We defined <strong style="color: red;">snippet</strong> is block content type, which you can define block fields below. <br/>For example: <span class="note"><i><?php echo htmlentities('<block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>') ?></i></span></p>
+								<hr/>
+								<table cellspacing="0" class="form-list" style="width:100%;">
+									<tbody>
+										<tr>
+											<td WIDTH="50%" style="vertical-align: top;">
+											<table>
+											<tr>
+												<td style="text-align:left;" class="label"><label for="title">Snippet Title <span
+													class="required">*</span></label></td>
+												<td class="value"><input type="text"
+												class="required-entry input-text required-entry" value="<?php echo (isset($formData['title'])) ? $formData['title'] : ""; ?>"
+												name="title" id="title"></td>
+											</tr>
+											<tr>
+												<td class="label" style="text-align:left;"><label for="block_type">Block Type</label></td>
+												<td class="value"><input type="text" class=" input-text"
+														value="<?php echo (isset($formData['block_type'])) ? $formData['block_type'] : ""; ?>" name="block_type" id="block_type" placeholder="core/template" >
+														<p class="note">
+															<span>Eg: page/html_topmenu. <br/>Leave empty for default type: <strong>core/template</strong></span>
+														</p>
+													</td>
+											</tr>
+											<tr>
+												<td class="label" style="text-align:left;"><label for="block_name">Block Name</label></td>
+												<td class="value"><input type="text" class=" input-text"
+														value="<?php echo (isset($formData['block_name'])) ? $formData['block_name'] : ""; ?>" name="block_name" id="block_name">
+														<p id="note_block_name" class="note"><span>Eg: <strong>catalog.topnav</strong></span></p>
+													</td>
+											</tr>
+											<tr>
+												<td class="label" style="text-align:left;"><label for="path">Template File Path</label></td>
+												<td class="value"><input type="text"
+														class=" input-text" value="<?php echo (isset($formData['path'])) ? $formData['path'] : ""; ?>" name="path"
+														id="path">
+														<p id="note_path" class="note">
+															<span>Eg: <strong>page/html/topmenu.phtml</strong></span>
+														</p></td>
+											</tr>
+											<tr>
+													<td class="label"><label for="position">Position</label></td>
+													<td class="value"><input type="text" class="input-text validate-number"
+														value="<?php echo (isset($formData['position'])) ? $formData['position'] : ""; ?>" name="position" id="position"></td>
+												</tr>
+												</table>
+											</td>
+											<td WIDTH="50%">
+												<table>
+												<tr><td class="label"><label for="group_id">Store View <span
+													class="required">*</span></label></td>
+													<td class="value">
+														<?php 
+														$store_info = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true); 
+														$selectedStoreView = array();
+														if (isset($formData['store_view']) && $formData['store_view'] != "") {
+															$selectedStoreView = explode(",", $formData['store_view']);
+															if (!empty($selectedStoreView) && in_array('0', $selectedStoreView)) {
+																$selectedStoreView = array(0);
+															}
+														}
+														?>
+														<select size="7" id="store_view" class="required-entry span3" multiple="multiple" name="store_view[]">
+															<?php foreach ($store_info as $value) :?>
+																<?php if ($value['value'] == 0) : ?>
+																	<option <?php echo (in_array($value['value'], $selectedStoreView) ) ? "selected='selected'" : ""; ?> value="0"><?php echo $value['label'] ?></option>
+																<?php else : ?>
+																	<optgroup label="<?php echo $value['label'] ?>"></optgroup>
+																	<?php if(!empty($value['value'])) : ?>
+																		<?php foreach($value['value'] as $option) : ?>
+																		<option <?php echo (in_array($option['value'], $selectedStoreView) ) ? "selected='selected'" : ""; ?> value="<?php echo $option['value'] ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $option['label'] ?></option>
+																		<?php endforeach; ?>
+																	<?php endif; ?>
+																<?php endif; ?>
+															<?php endforeach; ?>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td class="label"><label for="group_id">Recommend Positions</label></td>
+													<td class="value"><select multiple="multiple" class="multiselect" size="8" name="group_id[]"
+														id="group_id">
+															<?php $groups = Mage::getModel("titan/titanblock")->getBlockGroup() ?>
+															<?php 
+															$selectedGroup = array();
+															if (isset($formData['group_id'])) {
+																$selectedGroup = explode(",", $formData['group_id']);
+															}
+															?>
+															<?php foreach ($groups as $id => $groupTitle) : ?>
+															<option <?php echo (in_array($id, $selectedGroup) ) ? "selected='selected'" : ""; ?> value="<?php echo $id ?>"><?php echo $this->__($groupTitle) ?></option>
+															<?php endforeach; ?>
+													</select></td>
+												</tr>
+												
+												
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="" id="titan_tabs_form_section_update">
+					<div class="entry-edit">
+						<div class="entry-edit-head">
+							<h4 class="icon-head head-edit-form fieldset-legend">Advanced</h4>
+							<div class="form-buttons"></div>
+						</div>
+						<div id="titanblock_form" class="fieldset ">
+							<div class="hor-scroll">
+								<table cellspacing="0" class="form-list" style="width:100%;">
+									<tbody>
+										<tr>
+											<td width="50%">
+												<table>
+													<tr>
+														<td class="label"><label for="custom_layout_update">Layout Update XML</label></td>
+														<td class="value">
+															<textarea id="custom_layout_update" class="textarea" name="custom_layout_update" style="height: 65px;"><?php echo (isset($formData['custom_layout_update'])) ? $formData['custom_layout_update'] : ""; ?></textarea>
+															<p class="note">
+															Update external css/js/images of snippet. Example : <br/>
+															<span style="color:red;">&lt;reference name="extra_js"&gt;<br/>
+															&nbsp;&lt;action method="addItem"&gt;<br/>
+															&nbsp;&nbsp;&lt;type&gt;skin_js&lt;/type&gt;<br/>
+															&nbsp;&nbsp;&lt;name&gt;assets/js/home.js&lt;/name&gt;<br/>
+															&nbsp;&lt;/action&gt;<br/>	
+															&lt;/reference&gt;</span>
+															</p>
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td width="50%" style="vertical-align:top;">
+												<table>
+													<tr>
+														<td class="label"><label for="block_params">Advanced Params</label></td>
+														<td class="value">
+															<textarea id="block_params" class="textarea" name="description" style="height: 65px; " placeholder='Example {"category_id" : "5"}'><?php echo (isset($formData['description'])) ? $formData['description'] : ""; ?></textarea>
+															<p class="note">
+															Syntax: <span style="color:red;"><b>{"param_1" : "value1", "param_2" : "value2", ..}</b></span>
+															<br/>
+															Result (XML): <br/><?php echo htmlentities('<block type="..." name="..." param_name=value ... />') ?>
+															</span>
+															</p>
+														</td>
+													</tr>
+												</table>
+											</td>
+											
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- Block duoc reload moi sau khi them tu trang layout, dung jQuery de append vao top.document -->
+		<?php $titanBlocks = $this->getControlPanelBlocks(); ?>
+		<?php if(count($titanBlocks)>0) :  ?>
+			<ul id="add-on-blocks" style="display: none;">
+			<?php if(is_array($titanBlocks)) : ?>
+				<?php foreach ($titanBlocks as $block) : ?>
+				<li rel="<?php echo $block['group_id'] ?>" store="<?php echo $block['store_view'] ?>">
+					<label>
+					<input type="checkbox" value="<?php echo htmlentities(json_encode($block)) ?>" /> <?php echo $block['title'] ?>
+					</label>
+				</li>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			</ul>
+		<?php endif; ?>
+		<script type="text/javascript">
+			editForm = new VarienForm('edit_form', '');
+		</script>
+		<script type="text/javascript">
+            function toggleEditor() {
+                if (tinyMCE.getInstanceById('news_content') == null) {
+                    tinyMCE.execCommand('mceAddControl', false, 'news_content');
+                } else {
+                    tinyMCE.execCommand('mceRemoveControl', false, 'news_content');
+                }
+            }
+            function saveAndContinueEdit(){
+				var currentAction = $("#edit_form").attr("action");
+				$("#edit_form").attr("action", currentAction + "back/edit/")
+                $("#edit_form").submit();
+            }
+            jQuery(function($) {
+                var mainWindow = top.document;
+				$(".close-iframe").click(function() {
+					$("#add_block_iframe", mainWindow).css({
+						"top" : "-10000px",
+					});
+					$("#html-body", mainWindow).css({
+						"overflow" : "inherit"
+					});
+				});
+				//Append block add-on to parent modal, all block will up to date
+				$("#add-on-blocks", mainWindow).html($("#add-on-blocks").html());
+				<?php if (isset($params['block-id'])) : ?>
+				$(".close-iframe").click();// An iframe sau khi add block xong
+				<?php endif; ?>					
+            });
+        </script>
+	</div>
+</div>

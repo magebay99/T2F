@@ -1,0 +1,22 @@
+<?php 
+$_blockKey = "block6";
+$blockConfig = $this->getOutsideMainContentBlock("after_main_content");
+if (!isset($blockConfig['block_config'][$_blockKey])) {
+	return;
+}
+$_block = $blockConfig['block_config'][$_blockKey];
+?>
+<div <?php echo (isset($blockConfig['block_width'][$_blockKey])) ? 'class="'. $blockConfig['block_width'][$_blockKey] .'"' : ""; ?>>
+	<?php foreach ($_block as $blockKey => $gridColumns) : ?>
+		<div class="<?php echo $this->getCustomClass($gridColumns['custom_class']); ?>">
+			<?php foreach ($gridColumns['child_blocks'] as $_childBlock) : ?>
+				<?php $blockInfo = json_decode($_childBlock, true); ?>
+				<?php if ($blockInfo['type'] == "static_block") : ?>
+					<?php echo Mage::getSingleton("core/layout")->createBlock("cms/block")->setBlockId($blockInfo['identifier'])->toHtml(); ?>
+				<?php else : ?>
+					<?php echo $this->_getBlockHtml($blockInfo); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+	<?php endforeach; ?>
+</div>

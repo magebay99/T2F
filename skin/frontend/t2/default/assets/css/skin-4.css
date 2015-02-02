@@ -1,0 +1,5 @@
+/* Mixing Header Style */
+.t2-header{background:none repeat scroll 0 0 #8e44ad;}
+.t2-header-top{background:none repeat scroll 0 0 #8c4ea5;}
+.topMenu li li.hover > a{color:#8e44ad;}
+.topMenu li ul:before {  background: none repeat scroll 0 0 #8e44ad;}

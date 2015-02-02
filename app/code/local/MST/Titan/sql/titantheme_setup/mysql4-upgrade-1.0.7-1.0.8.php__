@@ -1,0 +1,60 @@
+<?php
+$installer = $this;
+$installer->startSetup();
+$mainModel = new MST_Titan_Model_Main();
+$_afterMainContent = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"block4":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-12 col-xs-12","blockDetails":"{\"type\":\"custom\",\"id\":\"52\",\"title\":\"Top Category Banners\",\"group_id\":\"3\"}","block_width":"t2-section"},{"index":0,"parentIndex":1,"parentClasses":"border-dash col-lg-12 col-xs-12","blockDetails":"{\"type\":\"custom\",\"id\":\"51\",\"title\":\"Brand Logos\",\"group_id\":\"3\"}","block_width":"t2-section"}],"block5":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-12 col-xs-12 no-padding","blockDetails":"{\"type\":\"custom\",\"id\":\"53\",\"title\":\"Banner Promotion Footer\",\"group_id\":\"3\"}","block_width":"t2-section-full no-padding"}]}}',
+	'description' => '',
+	'width_config' => 't2-section'
+);
+$_beforeMainContent = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"block1":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-12 col-xs-12 no-padding ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"43\",\"title\":\"SlideShow Style 1\",\"group_id\":\"2,3\"}","block_width":"t2-section-full no-padding"}]}}',
+	'description' => '',
+	'width_config' => 't2-section-full no-padding'
+);
+$_bottomBar = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"bottom-bar":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-12","blockDetails":"{\"type\":\"custom\",\"id\":\"56\",\"title\":\"Settings Option\",\"group_id\":\"7\"}","block_width":""}]}}',
+	'description' => '',
+	'width_config' => ''
+);
+$_footerData = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"footer-mid":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-3 col-md-3 col-sm-6 col-xs-12","blockDetails":"{\"type\":\"static_block\",\"title\":\"T2 Footer Links : Support\",\"identifier\":\"t2_support_links\"}","block_width":""},{"index":0,"parentIndex":1,"parentClasses":"border-dash col-lg-3 col-md-3 col-sm-6 col-xs-12","blockDetails":"{\"type\":\"static_block\",\"title\":\"T2 Footer Links : Shop\",\"identifier\":\"t2_shop_links\"}","block_width":""},{"index":0,"parentIndex":2,"parentClasses":"border-dash col-lg-3 col-md-3 col-sm-6 col-xs-12","blockDetails":"{\"type\":\"static_block\",\"title\":\"T2 Footer Links : My Account\",\"identifier\":\"t2_my_account_links\"}","block_width":""},{"index":0,"parentIndex":3,"parentClasses":"border-dash col-lg-3 col-md-3 col-sm-6 col-xs-12","blockDetails":"{\"type\":\"custom\",\"id\":\"39\",\"title\":\"Footer Newsletter Form\",\"group_id\":\"6\",\"store_view\":\"\"}","block_width":""},{"index":1,"parentIndex":3,"parentClasses":"border-dash col-lg-3 col-md-3 col-sm-6 col-xs-12","blockDetails":"{\"type\":\"custom\",\"id\":\"40\",\"title\":\"Follow Us (Social Links)\",\"group_id\":\"6\",\"store_view\":\"\"}","block_width":""}],"footer-bottom":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-6 col-xs-6 ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"37\",\"title\":\"Copyright\",\"group_id\":\"6\"}","block_width":""},{"index":0,"parentIndex":1,"parentClasses":"border-dash col-lg-6 col-xs-6 ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"38\",\"title\":\"Payment Logo\",\"group_id\":\"6\",\"store_view\":\"\"}","block_width":""}]}}',
+	'description' => '',
+	'width_config' => 't2-section-full no-padding'
+);
+$_headerData = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"header-top":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-3 col-xs-3 col-md-6 col-sm-4","blockDetails":"{\"type\":\"static_block\",\"title\":\"T2 Help - Call us\",\"identifier\":\"t2_help\"}","block_width":""},{"index":1,"parentIndex":0,"parentClasses":"border-dash col-lg-3 col-xs-3 col-md-6 col-sm-4","blockDetails":"{\"type\":\"custom\",\"id\":\"32\",\"title\":\"Store Language (dropdown)\",\"group_id\":\"1,6\",\"store_view\":\"\"}","block_width":""},{"index":0,"parentIndex":1,"parentClasses":"border-dash col-lg-9 col-xs-9 col-md-6 col-sm-8 ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"31\",\"title\":\"Top Links\",\"group_id\":\"1\"}","block_width":""}],"header-mid":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-2 col-xs-3 no-padding ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"33\",\"title\":\"Site Logo\",\"group_id\":\"1\"}","block_width":""},{"index":0,"parentIndex":1,"parentClasses":"border-dash col-lg-10 col-xs-9 main-menu ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"35\",\"title\":\"Main Navigation\",\"group_id\":\"1\"}","block_width":""},{"index":1,"parentIndex":1,"parentClasses":"border-dash col-lg-10 col-xs-9 main-menu ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"34\",\"title\":\"Search X Bar\",\"group_id\":\"1\"}","block_width":""},{"index":2,"parentIndex":1,"parentClasses":"border-dash col-lg-10 col-xs-9 main-menu ui-sortable","blockDetails":"{\"type\":\"custom\",\"id\":\"36\",\"title\":\"Dropdown Cart 1\",\"group_id\":\"1\"}","block_width":""}]}}',
+	'description' => '',
+	'width_config' => 't2-section-full no-padding'
+);
+$_mainContent = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{}}',
+	'description' => '',
+	'width_config' => 't2-section'
+);
+$_topBar = array(
+	'title' => '',
+	'config' => '{"finalBlockConfig":{"top-bar":[{"index":0,"parentIndex":0,"parentClasses":"border-dash col-lg-12","blockDetails":"{\"type\":\"custom\",\"id\":\"57\",\"title\":\"Popup\",\"group_id\":\"8\",\"store_view\":\"0\"}","block_width":""}]}}',
+	'description' => '',
+	'width_config' => ''
+);
+$mainModel->saveBlockConfig($_afterMainContent, "after_main_content");
+$mainModel->saveBlockConfig($_beforeMainContent, "before_main_content");
+$mainModel->saveBlockConfig($_bottomBar, "bottom-bar");
+$mainModel->saveBlockConfig($_footerData, "footer");
+$mainModel->saveBlockConfig($_headerData, "header");
+$mainModel->saveBlockConfig($_mainContent, "maincontent");
+$mainModel->saveBlockConfig($_topBar, "top-bar");
+die("Testing........");
+
+$installer->run("
+
+
+");
+$installer->endSetup(); 

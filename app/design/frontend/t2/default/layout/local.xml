@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+<!--
+Custom layout, loads most of the pages
+-->
+<default>
+	<reference name="before_body_end">
+		<block type="page/html_head" name="extra_js" as="extraJs" after="-" template="page/html/footer/footer_js.phtml">
+		<!-- Le javascript
+		====================ADD JAVASCRIPT TO BOTTOM OF PAGE FOR OPTIMIZATION PURPOSE====================== --> 
+		<!-- Placed at the end of the document so the pages load faster --> 
+		<!-- ADD YOUROWN SCRIPTS HERE -->
+		<action method="addItem"><type>skin_js</type><name>assets/bootstrap/js/bootstrap.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>assets/js/pace.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>assets/js/menu.js</name></action>	
+		<!-- Example: 	<action method="addItem"><type>skin_js</type><name>assets/js/script.js</name></action> -->
+		
+		<!-- END -->
+		</block>
+	</reference>
+	<reference name="head">
+	    <action method="addCss"><stylesheet>assets/bootstrap/css/bootstrap.min.css</stylesheet></action>
+		<action method="addCss"><stylesheet>assets/css/layout.css</stylesheet></action>
+		<action method="addCss"><stylesheet>assets/css/menu.css</stylesheet></action>
+		<!-- Custom stylesheets for this template -->
+		
+		<!--Example : <action method="addCss"><stylesheet>assets/css/styles.css</stylesheet></action>-->
+		
+		<!-- End Custom stylesheets for this template -->
+		<action method="addItem"><type>skin_js</type><name>assets/js/html5shiv.js</name><params/><if>lt IE 9</if></action>
+		<action method="addItem"><type>skin_js</type><name>assets/js/respond.min.js</name><params/><if>lt IE 9</if></action>
+		<action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
+		<action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
+	</reference>
+	<reference name="left">
+		<block type="titan/main" name="adv_left" as="adv_left" after="-" translate="label" template="page/html/left.phtml" />
+	</reference>
+	<reference name="right">
+		<block type="titan/main" name="adv_right" as="adv_right" after="-" translate="label" template="page/html/right.phtml" />
+	</reference>
+	<reference name="before_body_end">
+		<block type="core/template" name="settings" ifconfig="titan/general/enable_setting_box" template="settings/settings.phtml" />
+	</reference>
+</default>
+<cms_index_index>
+	<reference name="extra_js">
+		<!-- include custom script for only homepage  --> 
+		<!--action method="addItem"><type>skin_js</type><name>assets/js/home.js</name></action-->	
+	</reference>
+	<reference name="before_main_content">
+		<block type="titan/main" name="block-1" as="block1" translate="label" template="page/block-1.phtml">
+			<label>BLOCK 1</label>
+		</block>
+		<block type="titan/main" name="block-2" as="block2" translate="label" template="page/block-2.phtml">
+			<label>BLOCK 2</label>
+		</block>
+		<block type="titan/main" name="block-3" as="block3" translate="label" template="page/block-3.phtml">
+			<label>BLOCK 3</label>
+		</block>	
+	</reference>
+	<reference name="after_main_content">
+		<block type="titan/main" name="block-4" as="block4" translate="label" template="page/block-4.phtml">
+			<label>BLOCK 4</label>
+		</block>
+		<block type="titan/main" name="block-5" as="block5" translate="label" template="page/block-5.phtml">
+			<label>BLOCK 5</label>
+		</block>
+		<block type="titan/main" name="block-6" as="block6" translate="label" template="page/block-6.phtml">
+			<label>BLOCK 6</label>
+		</block>
+	</reference>
+	
+</cms_index_index>
+
+</layout>

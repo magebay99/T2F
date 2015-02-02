@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MST_Ajaxaddtocart>
+            <active>true</active>
+            <codePool>local</codePool>
+        </MST_Ajaxaddtocart>
+    </modules>
+</config>

@@ -1,0 +1,20 @@
+<?php 
+$_blockKey = "right";
+$blockConfig = $this->getHeaderOrFooterBlock("maincontent");
+?>
+<?php if (isset($blockConfig[$_blockKey])) : ?>
+<div class="panel <?php echo $blockConfig['width_config'] ?>">
+	<?php foreach ($blockConfig[$_blockKey] as $gridColumns) : ?>
+		<div class="<?php echo $gridColumns['custom_class'] ?>">
+			<?php foreach ($gridColumns['child_blocks'] as $_childBlock) : ?>
+				<?php $blockInfo = json_decode($_childBlock, true); ?>
+				<?php if ($blockInfo['type'] == "static_block") : ?>
+					<?php echo Mage::getSingleton("core/layout")->createBlock("cms/block")->setBlockId($blockInfo['identifier'])->toHtml(); ?>
+				<?php else : ?>
+					<?php echo $this->_getBlockHtml($blockInfo); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>

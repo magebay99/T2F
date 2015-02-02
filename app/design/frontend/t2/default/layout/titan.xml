@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+<!--
+Custom layout, loads most of the pages
+-->
+<titan_index_index>
+	<reference name="content">
+		<block type="titan/main" name="root" template="titan/container.phtml">
+			<block type="titan/main" name="titan_overview" as="titan_overview" template="titan/container/overview.phtml"/>
+			<block type="titan/main" name="titan_general" as="titan_general" template="titan/container/general.phtml"/>
+			<block type="titan/main" name="titan_layout" as="titan_layout" template="titan/container/layout.phtml"/>
+			<block type="titan/main" name="titan_page_options" as="titan_page_options" template="titan/container/page_options.phtml"/>
+			<block type="titan/main" name="titan_navigation" as="titan_navigation" template="titan/container/navigation.phtml"/>
+			<block type="titan/main" name="titan_customization" as="titan_customization" template="titan/container/customization.phtml"/>
+			<block type="titan/main" name="titan_info" as="titan_info" template="titan/container/info.phtml"/>
+			<block type="titan/main" name="titan_controls_panel" as="titan_controls_panel" template="titan/container/controls_panel.phtml"/>
+			<block type="titan/main" name="titan_block_config_data" as="titan_block_config_data" template="titan/container/block_config.phtml"/>
+		</block>
+	</reference>
+</titan_index_index>
+</layout>

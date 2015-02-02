@@ -1,0 +1,20 @@
+<?php 
+$logoType = Mage::getStoreConfig('titan/general/logo_type');
+$slogan = Mage::getStoreConfig('titan/general/store_slogan');
+?>
+<h1 class="logo">
+<?php if($logoType=='text'){ 
+// Logo Type: Text
+?>
+<a href="<?php echo $this->getUrl('') ?>" title="<?php echo Mage::getStoreConfig('titan/general/logo_text'); ?>" class="logo-text"><?php echo Mage::getStoreConfig('titan/general/logo_text');?></a>
+<?php }elseif($logoType=='image'){ 
+// Logo Type: Image
+?>
+<a href="<?php echo $this->getUrl('') ?>" title="<?php echo Mage::getStoreConfig('titan/general/logo_alt'); ?>" class="logo-image"><img src="<?php echo Mage::getStoreConfig('titan/general/logo_image'); ?>" alt="<?php echo Mage::getStoreConfig('titan/general/logo_alt'); ?>" /></a>
+<?php }else { 
+// Logo Type: Default Magento Settings
+?>
+<a href="<?php echo $this->getUrl('') ?>" title="<?php echo Mage::getStoreConfig('design/header/logo_alt'); ?>" class="logo-default"><img src="<?php echo Mage::getStoreConfig('design/header/logo_src'); ?>" alt="<?php echo Mage::getStoreConfig('design/header/logo_alt'); ?>" /></a>
+<?php } ?>
+<?php if($slogan){ echo '<strong>'.$slogan.'</strong>';} ?>
+</h1>

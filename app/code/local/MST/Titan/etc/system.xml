@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+        <mst translate="label" module="titan">
+            <label>Magebay</label>
+            <sort_order>330</sort_order>
+        </mst>
+    </tabs>
+	<sections>
+		<titan translate="label" module="titan">
+			<label>T2 Theme - Settings</label>
+			<tab>mst</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>10</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+                <general translate="label">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+						<theme_layout translate='label'>
+                    		<label>Theme Layout</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_layout</source_model>
+                    	</theme_layout>
+						<theme_width translate="label">
+							<label>Custom width (pixel)</label>
+							<comment>Example : 980px</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>96</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><theme_layout>custom</theme_layout></depends>
+						</theme_width>
+						<theme_style translate='label'>
+                    		<label>Default Theme Style</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>195</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_styles</source_model>
+                    	</theme_style>
+						<logo_type translate='label'>
+                    		<label>Logo Type</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>295</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_logotype</source_model>
+                    	</logo_type>
+						<logo_image translate='label'>
+                    		<label>Logo Image</label>
+                    		<frontend_type>image</frontend_type>
+							<backend_model>adminhtml/system_config_backend_image</backend_model>
+							<upload_dir config="system/filesystem/media" scope_info="1">titan/logo</upload_dir>
+							<base_url type="media" scope_info="1">titan/logo</base_url>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends><logo_type>image</logo_type></depends>
+                    	</logo_image>
+						<logo_text translate='label'>
+                    		<label>Logo Text</label>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends><logo_type>text</logo_type></depends>
+                    	</logo_text>
+						<logo_alt translate='label'>
+                    		<label>Logo Alt</label>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends><logo_type>image</logo_type></depends>
+                    	</logo_alt>
+						
+						<store_slogan translate='label'>
+                    		<label>Store Slogan</label>
+							<comment>Leave empty to hide slogan</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>495</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</store_slogan>
+						<!-- <enable_top_bar translate='label'>
+                    		<label>Enable top bar</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>595</sort_order>
+							<comment>Always on top and stretches to full width of browser window</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                    	</enable_top_bar> -->
+						<enable_setting_box translate='label'>
+                    		<label>Enable setting box</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>695</sort_order>
+							<comment>Show the settings box for preview, hide it when your site is live.</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                    	</enable_setting_box>
+                    </fields>
+                </general>
+				<category translate="label">
+                    <label>Category Page Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>150</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+						<show_sub translate='label'>
+                    		<label>Auto show sub categories thumbnail</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>95</sort_order>
+							<comment>Enable to show all sub categories thumbnails below category description</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                    	</show_sub>
+						<product_per_row translate='label'>
+                    		<label>Product items per row</label>
+							<comment>Number of products per row on Grid view mode.</comment>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>195</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_productperrow</source_model>
+                    	</product_per_row>
+						<image_width translate='label'>
+                    		<label>Product Thumbnail WIDTH</label>
+							<comment>Product thumbnail image width (pixel). Example: 250.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>295</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</image_width>
+						<image_height translate='label'>
+                    		<label>Product Thumbnail HEIGHT</label>
+							<comment>Product thumbnail image height (pixel). Example: 250.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</image_height>
+                    </fields>
+                </category>
+				<product translate="label">
+                    <label>Product Details Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>250</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+						<!-- <media_layout translate='label'>
+                    		<label>Media Layout</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_medialayout</source_model>
+                    	</media_layout> -->
+						<large_image_width translate='label'>
+                    		<label>Large Image WIDTH</label>
+							<comment>Large Image Width when Zoom in. Exmple: 1000.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>195</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</large_image_width>
+						<large_image_height translate='label'>
+                    		<label>Large Image HEIGHT</label>
+							<comment>Large Image HEIGHT when Zoom in. Exmple: 1000.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>295</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</large_image_height>
+						<main_image_width translate='label'>
+                    		<label>Main Image WIDTH</label>
+							<comment>Product Main Image Width, example 600.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</main_image_width>
+						<main_image_height translate='label'>
+                    		<label>Main Image HEIGHT</label>
+							<comment>Product Main Image Height, example 600.</comment>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>495</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</main_image_height>
+						<product_info translate='label'>
+                    		<label>Details in Layout Type</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>595</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<source_model>titan/config_productinfotypes</source_model>
+                    	</product_info>
+                    </fields>
+                </product>
+				<navigation translate="label">
+                    <label>Navigation Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>350</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+						<main_menu translate='label'>
+                    		<label>Default Main Menu</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_defaultmenu</source_model>
+                    	</main_menu>
+						<mcp_group translate='label'>
+                    		<label>Choose default menu group</label>
+                    		<frontend_type>select</frontend_type>
+                    		<sort_order>195</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <source_model>titan/config_mcpgroup</source_model>
+							<depends><main_menu>mcp</main_menu></depends>
+							<comment>Group list from MenuPro > Groups > Manage Groups.</comment>
+                    	</mcp_group>
+						<!-- <custom_class translate='label'>
+                    		<label>Custom Class</label>
+                    		<frontend_type>text</frontend_type>
+                    		<sort_order>295</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><main_menu>default</main_menu></depends>
+                    	</custom_class> -->
+                    </fields>
+                </navigation>
+				<!-- <customization translate="label">
+                    <label>Customization Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>450</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+						<after_head_open translate='label'>
+                    		<label>After head open tag</label>
+                    		<frontend_type>textarea</frontend_type>
+                    		<sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment>Example: custom css, js (link to file or embed code).</comment>
+                    	</after_head_open>
+						<before_head_close translate='label'>
+                    		<label>Before head close tag</label>
+                    		<frontend_type>textarea</frontend_type>
+                    		<sort_order>195</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment>Example: insert Google Analytics Javascript code.</comment>
+                    	</before_head_close>
+						<after_body_open translate='label'>
+                    		<label>After body open tag</label>
+                    		<frontend_type>textarea</frontend_type>
+                    		<sort_order>295</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment>Example Insert float banner ..</comment>
+                    	</after_body_open>
+						<before_body_close translate='label'>
+                    		<label>Before body close tag</label>
+                    		<frontend_type>textarea</frontend_type>
+                    		<sort_order>395</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment>Example Insert live chat code from Comm100, Zopim, Livechat ..</comment>
+                    	</before_body_close>
+                    </fields>
+                </customization> -->
+			</groups>
+		</titan>
+	</sections>
+</config>

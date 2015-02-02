@@ -1,0 +1,169 @@
+.toggleMenu {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  display: none;
+  margin-top: 8px;
+  padding: 10px 15px;
+}
+.topMenu {
+    list-style: none;
+     *zoom: 1;
+}
+.topMenu:before,
+.topMenu:after {
+    content: " "; 
+    display: table; 
+}
+.topMenu:after {
+    clear: both;
+}
+.topMenu ul {
+    list-style: none;
+    width: 15em;
+}
+.topMenu > li.parent > a {
+  padding-right: 20px;
+}
+.topMenu a {
+    padding: 10px 15px;
+    color:#fff;
+}
+.topMenu ul a {
+  border-bottom: 1px solid #eeeeee;
+  color: #34495e;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+}
+.topMenu li li.hover > a{
+	
+	background:rgba(238, 238, 238,0.8);
+}
+.topMenu li {
+    position: relative;
+}
+.topMenu > li {
+    float: left;   
+}
+.topMenu li.parent {
+ 
+}
+.topMenu > li > .parent {
+ 
+}
+.topMenu li li.parent {
+  padding: 0;
+}
+.topMenu li.parent:after {
+  border-color: rgb(255, 255, 255) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+  border-style: solid;
+  border-width: 5px 6px 6px;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 5px;
+  top: 23px;
+  width: 0;
+}
+.topMenu li li.parent:after {
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #34495e;
+  border-style: solid;
+  border-width: 5px 6px 6px;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 5px;
+  top: 18px;
+  width: 0;
+}
+.topMenu > li > a {
+    display: block;
+}
+
+.topMenu li ul:before {
+  content: "";
+  height: 3px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index:999;
+}
+.topMenu li ul {
+  background: none repeat scroll 0 0 #ffffff;
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  left: -9999px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease 0s;
+  z-index: 9999;
+}
+.topMenu > li.hover > ul {
+    left: 0;
+	opacity:1;
+}
+.topMenu li li.hover > ul {
+    left: 100%;
+    top: 0;
+	opacity:1;
+}
+.topMenu li li a {
+    display: block;
+    position: relative;
+    z-index:100;
+}
+.topMenu li li li a {
+
+    z-index:200;
+
+}
+
+@media screen and (max-width: 768px) {
+    .active {
+        display: block;
+    }
+	.topMenu{
+		display: block;
+		position: absolute;
+		top: 50px;
+		width: 100%;
+		z-index: 999;
+		background: none repeat scroll 0 0 rgb(57, 195, 129);
+	}
+    .topMenu > li {
+        float: none;
+    }
+    .topMenu > li > .parent {
+        background-position: 95% 50%;
+    }
+    .topMenu li li .parent {
+ 
+    }
+    .topMenu ul {
+        display: block;
+        width: 100%;
+    }
+   .topMenu > li.hover > ul , .topMenu li li.hover > ul {
+        position: static;
+		opacity:1;
+    }
+	.navbar-cart {
+	  background: none repeat scroll 0 0 rgb(255, 255, 255);
+	  color: rgb(0, 0, 0);
+	  left: 0;
+	  position: absolute;
+	  top: 57px;
+	  width: 100%;
+	  z-index: 9999;
+	}
+}
+@media screen and (max-width: 480px) {
+	.navbar-toggle span {
+	  display: none;
+	}
+	.navbar-cart div, .navbar-cart a, .navbar-cart h4, .navbar-cart p, .navbar-cart td, .navbar-cart span.price {
+	  color: rgb(0, 0, 0);
+	  font-size: 12px;
+	}
+}

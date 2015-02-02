@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MST_Titan>
+            <active>true</active>
+            <codePool>local</codePool>
+        </MST_Titan>
+    </modules>
+</config> 
