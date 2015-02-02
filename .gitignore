@@ -118,3 +118,12 @@ skin/frontend/default/modern/
 skin/frontend/enterprise
 skin/install/
 var/
+### EXCLUDE MODULE FILES
+!app/code/local/MST/Titan/
+!app/design/adminhtml/default/default/layout/titan.xml
+!app/design/frontend/t2/
+!app/etc/modules/MST_Titan.xml
+!skin/adminhtml/default/default/titan/
+!skin/frontend/t2/
+!app/design/adminhtml/default/default/template/titan/
+!skin/adminhtml/default/default/titan/structural-blocks.jpg
