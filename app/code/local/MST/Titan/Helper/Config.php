@@ -186,6 +186,7 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 					'title' => $staticBlockInfo->getTitle(),
 					'identifier' => $staticBlockInfo->getIdentifier(),
 					'content' => $staticBlockInfo->getContent(),
+					'store_id' => $staticBlockInfo->getStoreId()
 				);
 			}
 			$sampleData['static_blocks'] = $staticBlockContent;
