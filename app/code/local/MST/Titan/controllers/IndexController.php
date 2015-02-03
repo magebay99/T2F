@@ -50,7 +50,10 @@ class MST_Titan_IndexController extends Mage_Core_Controller_Front_Action
 		//$this->getResponse()->setBody($response); */
 	}
 	public function testAction() {
-		echo "Hi There<br/><pre>";
+		echo "<h1>Export Data</h1><br/><pre>";
+		$jsonPath = "tam truoc";
+		Mage::helper("titan/config")->importData($jsonPath);
+		//Mage::helper("titan/config")->exportData();
 	}
 	public function saveGeneralAction() {
 		$params = $this->getRequest()->getParams();

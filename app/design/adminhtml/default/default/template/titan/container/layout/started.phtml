@@ -43,11 +43,31 @@
 		</div>
 		<div class="col-lg-12">
 			<div class="panel panel-primary">
+			  <div class="panel-heading"><strong>EXPORT SAMPLE DATA</strong></div>
+			  <div class="panel-body">
+				<?php $exportUrl = Mage::helper("adminhtml")->getUrl("titan/adminhtml_layout/export"); ?>
+				<p><a href="<?php echo $exportUrl ?>" class="btn btn-xs  btn-info"><i class="glyphicon glyphicon-refresh "></i> Export Current Layout </a></p>
+				<ul>
+					<li>+ Export all snippets</li>
+					<li>+ Export current layout builder config</li>
+					<li>+ Export static blocks that used in layout</li>
+				</ul>
+			  </div>
 			  <div class="panel-heading"><strong>IMPORT SAMPLE DATA</strong></div>
 			  <div class="panel-body">
-				<p><span class="btn btn-xs  btn-info"><i class="glyphicon glyphicon-refresh "></i> Sample Layout Builder </span></p>
-				<p><span class="btn btn-xs  btn-info"><i class="glyphicon glyphicon-refresh "></i> Sample CMS/Static Block </span></br></p>
-				<p><span class="btn btn-xs  btn-info"><i class="glyphicon glyphicon-refresh "></i> Sample Snippets </span></p>
+				<?php $importUrl = Mage::helper("adminhtml")->getUrl("titan/adminhtml_layout/import"); ?>
+				<form id="import_form" action="<?php echo $importUrl; ?>" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+					<p>
+						<input type="file" name="sample_data_file"/>
+						<p><a class="btn btn-xs  btn-info" id="import_btn" onclick="document.getElementById('import_form').submit();"><i class="glyphicon glyphicon-refresh "></i> Import Layout</a></p>
+					</p>
+				</form>
+				
+				<ul>
+					<li>+ Please export to make a backup</li>
+					<li>+ All snippets will be overwrite</li>
+				</ul>
 			  </div>
 			</div>
 		</div>

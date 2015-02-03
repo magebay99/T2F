@@ -10,12 +10,12 @@ class MST_Titan_Model_Titanblock extends Mage_Core_Model_Abstract
 		if (!isset($data['id']) || $data['id'] == "") {
 			$data['id'] = NULL;
 			$collection = $this->getCollection();
-			$collection->addFieldToFilter("path", $data['path']);
+			//$collection->addFieldToFilter("path", $data['path']);
 			$collection->addFieldToFilter("title", $data['title']);
-			$collection->addFieldToFilter("block_name", $data['block_name']);
+			//$collection->addFieldToFilter("block_name", $data['block_name']);
 			if ($collection->count()) {
 				$response['status'] = "error";
-				$response['message'] = "This template file has been used. Please check item with ID = " . $collection->getFirstItem()->getId();
+				$response['message'] = "This template (" . $data['title'] .") has been used. Please use another Title";
 				return $response;
 			}
 		}

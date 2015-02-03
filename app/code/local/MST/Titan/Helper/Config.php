@@ -158,4 +158,116 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		);
 		return $customData;
 	}
+	public function exportData() {
+		$sampleExportDir = Mage::getBaseDir("media") . DS . "titan" . DS . "export" . DS;
+		if(!file_exists($sampleExportDir)) {
+			try {
+				if(!file_exists(Mage::getBaseDir("media") . DS . "titan" . DS)) {
+					mkdir(Mage::getBaseDir("media") . DS . "titan" . DS, 777);
+				}
+				mkdir($sampleExportDir, 777);
+			} catch(Exception $d) {
+				die("Can not create folder to save sample data");
+			}
+		}
+		if(file_exists($sampleExportDir)) {
+			$exportFilename = "sample-data-" . date("Y-m-d", time()) . "-" . time() . ".json";
+			$layoutBuilderConfig = $this->getLayoutBuilder();
+			$allBlock = $this->getAllBlocks();
+			$sampleData = array();
+			$sampleData['blocks'] = $allBlock;
+			$sampleData['layout_builder'] = $layoutBuilderConfig;
+			$dataInJSON = json_encode($sampleData);
+			$result = file_put_contents($sampleExportDir . $exportFilename, $dataInJSON);
+			if($result) {
+				$samplePath = Mage::getBaseUrl("media") . "titan/export/" . $exportFilename;
+				$response['path'] = $samplePath;
+			}
+			header('Content-type: application/json');
+			header("Content-disposition: attachment; filename=$exportFilename");
+			echo $dataInJSON;
+		}
+	}
+	public function getLayoutBuilder() {
+		$mainModel = new MST_Titan_Model_Main();
+		$blockData = array("after_main_content", "before_main_content", "bottom-bar", "footer", "header", "maincontent", "top-bar");
+		$allBlockConfig = array();
+		foreach($blockData as $_blockKey) {
+			$blockConfig = $mainModel->getBlockConfig($_blockKey);
+			unset($blockConfig['id']);
+			$allBlockConfig[$_blockKey] = $blockConfig;
+		}
+		return $allBlockConfig;
+	}
+	public function getAllBlocks() {
+		$titanBlocks = Mage::getModel("titan/titanblock")->getCollection();
+		$allBlock = array();
+		foreach($titanBlocks as $block) {
+			$blockData = $block->getData();
+			unset($blockData['id']);
+			$allBlock[] = $blockData;
+		}
+		return $allBlock;
+	}
+	public function getAllStaticBlockUsed() {
+		
+	}
+	public function importData($sampleJson) {
+		if ($sampleJson != "") {
+			$sampleDataDecoded = json_decode($sampleJson, true);
+			//Import Blocks/Snippet
+			$result = $this->importBlocks($sampleDataDecoded);
+			//Import layout builder
+			$layout_result = $this->importLayoutBuilder($sampleDataDecoded);
+			return array(
+				'blocks' => $result,
+				'layout_builder' => $layout_result
+			);
+		}
+	}
+	protected function importBlocks($sampleDataDecoded) {
+		$response['status'] = "error";
+		$response['message'] = "There is no block imported! Something went wrong";
+		if(isset($sampleDataDecoded['blocks'])) {
+			$blocks = $sampleDataDecoded['blocks'];
+			$mainModel = Mage::getModel("titan/titanblock");
+			/**
+			$resource = Mage::getSingleton('core/resource');
+			$writeConnection = $resource->getConnection('core_write');
+			$blockTable = $resource->getTableName('mst_titan_blocks');
+			//Reset table
+			$resetSql = "TRUNCATE $blockTable";
+			$writeConnection->query($resetSql);
+			**/
+			try {
+				foreach($blocks as $_blockData) {
+					//unset($_blockData['id']);
+					$result = $mainModel->saveBlock($_blockData);
+				}
+				$response['status'] = "success";
+				$response['message'] = "All snippet imported successfully!";
+			} catch (Exception $e) {
+				
+			}
+		}
+		return $response;
+	}
+	protected function importLayoutBuilder($sampleDataDecoded) {
+		$layoutBuilderConfigs = $sampleDataDecoded['layout_builder'];
+		$mainModel = new MST_Titan_Model_Main();
+		$response['status'] = "error";
+		$response['message'] = "Can not import layout! Something went wrong";
+		if(isset($sampleDataDecoded['blocks'])) {
+			try {
+				foreach($layoutBuilderConfigs as $_blockKey => $_blockConfig) {
+					$mainModel->saveBlockConfig($_blockConfig, $_blockKey);
+				}
+				$response['status'] = "success";
+				$response['message'] = "Layout imported successfully!";
+			} catch (Exception $e) {
+				
+			}
+		}
+		return $response;
+	}
 } 

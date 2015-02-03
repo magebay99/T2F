@@ -83,11 +83,13 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 			$jsonDataArray = json_decode($config['config'], true);
 			$finalBlockConfig = array();
 			$finalBlockConfig ['width_config'] = $config['width_config'];
-			foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
-				foreach ($gridColumns as $childBlocks) {
-					if (!$this->checkBlockActive($childBlocks)) continue;
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+			if(is_array($jsonDataArray['finalBlockConfig'])) {
+				foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
+					foreach ($gridColumns as $childBlocks) {
+						if (!$this->checkBlockActive($childBlocks)) continue;
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+					}
 				}
 			}
 			return $finalBlockConfig;
@@ -99,14 +101,16 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 			$jsonDataArray = json_decode($config['config'], true);
 			$finalBlockConfig = array();
 			$widthConfig = array();
-			foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
-				foreach ($gridColumns as $childBlocks) {
-					if (!$this->checkBlockActive($childBlocks)) continue;
-					if (isset($childBlocks['block_width']) && $childBlocks['block_width'] != "") {
-						$widthConfig[$blockKey] = $childBlocks['block_width'];
+			if(is_array($jsonDataArray['finalBlockConfig'])) {
+				foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
+					foreach ($gridColumns as $childBlocks) {
+						if (!$this->checkBlockActive($childBlocks)) continue;
+						if (isset($childBlocks['block_width']) && $childBlocks['block_width'] != "") {
+							$widthConfig[$blockKey] = $childBlocks['block_width'];
+						}
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
 					}
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
 				}
 			}
 			return array(
@@ -120,11 +124,13 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 		if (isset($config['config'])) {
 			$jsonDataArray = json_decode($config['config'], true);
 			$finalBlockConfig = array();
-			foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
-				foreach ($gridColumns as $childBlocks) {
-					if (!$this->checkBlockActive($childBlocks)) continue;
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+			if(is_array($jsonDataArray['finalBlockConfig'])) {
+				foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
+					foreach ($gridColumns as $childBlocks) {
+						if (!$this->checkBlockActive($childBlocks)) continue;
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+					}
 				}
 			}
 			return $finalBlockConfig;
@@ -135,11 +141,13 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 		if (isset($config['config'])) {
 			$jsonDataArray = json_decode($config['config'], true);
 			$finalBlockConfig = array();
-			foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
-				foreach ($gridColumns as $childBlocks) {
-					if (!$this->checkBlockActive($childBlocks)) continue;
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
-					$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+			if(is_array($jsonDataArray['finalBlockConfig'])) {
+				foreach ($jsonDataArray['finalBlockConfig'] as $blockKey => $gridColumns) {
+					foreach ($gridColumns as $childBlocks) {
+						if (!$this->checkBlockActive($childBlocks)) continue;
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['child_blocks'][] = $childBlocks['blockDetails'];
+						$finalBlockConfig[$blockKey][$childBlocks['parentIndex']]['custom_class'] = $childBlocks['parentClasses'];
+					}
 				}
 			}
 			return $finalBlockConfig;
