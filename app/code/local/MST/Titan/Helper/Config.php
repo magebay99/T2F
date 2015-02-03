@@ -177,6 +177,18 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 			$sampleData = array();
 			$sampleData['blocks'] = $allBlock;
 			$sampleData['layout_builder'] = $layoutBuilderConfig;
+			$staticBlockContent = array();
+			$staticBlockList = $this->getAllStaticBlockUsed($layoutBuilderConfig);
+			$staticBlockModel = Mage::getModel("cms/block");
+			foreach ($staticBlockList as $identifier) {
+				$staticBlockInfo = $staticBlockModel->load($identifier);
+				$staticBlockContent[] = array(
+					'title' => $staticBlockInfo->getTitle(),
+					'identifier' => $staticBlockInfo->getIdentifier(),
+					'content' => $staticBlockInfo->getContent(),
+				);
+			}
+			$sampleData['static_blocks'] = $staticBlockContent;
 			$dataInJSON = json_encode($sampleData);
 			$result = file_put_contents($sampleExportDir . $exportFilename, $dataInJSON);
 			if($result) {
@@ -209,8 +221,26 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		}
 		return $allBlock;
 	}
-	public function getAllStaticBlockUsed() {
-		
+	public function getAllStaticBlockUsed($layoutBuilderConfig) {
+		$allStaticBlock = array();
+		if(is_array($layoutBuilderConfig)) {
+			foreach ($layoutBuilderConfig as $_blockData) {
+				if($_blockData['config'] != "") {
+					$_blockDataDecode = json_decode($_blockData['config'], true);
+					foreach ($_blockDataDecode as $_configInfo) {
+						foreach ($_configInfo as $_snippets) {
+							foreach($_snippets as $snippetInfo) {
+								$snippetDecode = json_decode($snippetInfo['blockDetails'], true);
+								if($snippetDecode['type'] == "static_block" && !in_array($snippetDecode['identifier'], $allStaticBlock)) {
+									$allStaticBlock[] = $snippetDecode['identifier'];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $allStaticBlock;
 	}
 	public function importData($sampleJson) {
 		if ($sampleJson != "") {
@@ -219,6 +249,8 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 			$result = $this->importBlocks($sampleDataDecoded);
 			//Import layout builder
 			$layout_result = $this->importLayoutBuilder($sampleDataDecoded);
+			//Import static block
+			$this->importStaticBlock($sampleDataDecoded);
 			return array(
 				'blocks' => $result,
 				'layout_builder' => $layout_result
@@ -226,9 +258,10 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		}
 	}
 	protected function importBlocks($sampleDataDecoded) {
-		$response['status'] = "error";
-		$response['message'] = "There is no block imported! Something went wrong";
+		$response = array();
 		if(isset($sampleDataDecoded['blocks'])) {
+			$response['status'] = "error";
+			$response['message'] = "There is no block imported! Something went wrong";
 			$blocks = $sampleDataDecoded['blocks'];
 			$mainModel = Mage::getModel("titan/titanblock");
 			/**
@@ -253,14 +286,38 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		return $response;
 	}
 	protected function importLayoutBuilder($sampleDataDecoded) {
-		$layoutBuilderConfigs = $sampleDataDecoded['layout_builder'];
-		$mainModel = new MST_Titan_Model_Main();
-		$response['status'] = "error";
-		$response['message'] = "Can not import layout! Something went wrong";
-		if(isset($sampleDataDecoded['blocks'])) {
+		$response = array();
+		if(isset($sampleDataDecoded['layout_builder'])) {
+			$layoutBuilderConfigs = $sampleDataDecoded['layout_builder'];
+			$mainModel = new MST_Titan_Model_Main();
+			$response['status'] = "error";
+			$response['message'] = "Can not import layout! Something went wrong";
 			try {
 				foreach($layoutBuilderConfigs as $_blockKey => $_blockConfig) {
 					$mainModel->saveBlockConfig($_blockConfig, $_blockKey);
+				}
+				$response['status'] = "success";
+				$response['message'] = "Layout imported successfully!";
+			} catch (Exception $e) {
+				
+			}
+		}
+		return $response;
+	}
+	protected function importStaticBlock($sampleDataDecoded) {
+		$response = array();
+		if(isset($sampleDataDecoded['static_blocks'])) {
+			$response['status'] = "error";
+			$response['message'] = "Can not create static block! Something went wrong";
+			$staticBlocks = $sampleDataDecoded['static_blocks'];
+			try {
+				foreach($staticBlocks as $_staticBlockData) {
+					//Check if exists
+					$staticBlockModel = Mage::getModel("cms/block");
+					if($staticBlockModel->load($_staticBlockData['identifier'])->getId() != null) {
+						continue;
+					}
+					$staticBlockModel->setData($_staticBlockData)->save();
 				}
 				$response['status'] = "success";
 				$response['message'] = "Layout imported successfully!";
