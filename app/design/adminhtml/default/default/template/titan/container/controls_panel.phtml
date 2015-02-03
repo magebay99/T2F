@@ -1,0 +1,123 @@
+<div class="modal fade bs-example-modal-lg control_panel_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">SETTING UP SUB BLOCK<span>Select snippet(s) from Snippets Library to assign current block </span></h4>
+	  </div>
+	  <div class="modal-body">
+			<div class="">
+				<nav class="navbar navbar-default" role="navigation">
+				  <div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header"> 
+					  <a class="navbar-brand" href="#">Snippets Library</a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter by position<span class="caret"></span></a>
+							  <?php $groups = Mage::getModel("titan/titanblock")->getBlockGroup() ?>
+							  <ul id="filter_block" class="dropdown-menu" role="menu">
+								<?php foreach($groups as $key => $title) : ?>
+								<li rel="<?php echo $key ?>"><a><?php echo $title ?></a></li>
+								<?php endforeach; ?>
+								<li rel="reset"><a><?php echo $this->__("Reset Filter") ?></a></li>
+							  </ul>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter by store<span class="caret"></span></a>
+								<?php 
+									$store_info = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true); 
+									$selectedStoreView = array();
+									if (isset($formData['store_view']) && $formData['store_view'] != "") {
+										$selectedStoreView = explode(",", $formData['store_view']);
+										if (!empty($selectedStoreView) && in_array('0', $selectedStoreView)) {
+											$selectedStoreView = array(0);
+										}
+									}
+								?>
+								<ul id="filter_block_by_store" class="dropdown-menu" role="menu">
+									<?php if(is_array($store_info)) : ?>
+										<?php foreach($store_info as $value) : ?>
+											<?php if ($value['value'] == 0) : ?>
+												<li rel="0"><a><?php echo $value['label'] ?></a></li>
+											<?php else : ?>
+												<?php if(!empty($value['value'])) : ?>
+													<?php foreach($value['value'] as $option) : ?>
+													<li rel="<?php echo $option['value'] ?>"><a><?php echo $option['label'] ?></a></li>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											<?php endif; ?>
+										<?php endforeach; ?>
+										<li rel="reset"><a><?php echo $this->__("Reset Filter") ?></a></li>
+									<?php endif; ?>
+								</ul>
+							</li>
+						</ul>
+						<div class="form-group navbar-form navbar-right">
+						  <input type="text" class="form-control" id="find_addon" placeholder="Find Add-on name">
+						</div>
+					</div><!-- /.navbar-collapse -->
+				  </div><!-- /.container-fluid -->
+				</nav>
+				<?php $staticBlocks = $this->getAllStaticBlocks(); ?>
+				<?php if(count($staticBlocks)>0) : ?>
+				<div class="col-lg-6">
+					<h3>CMS Static Blocks</h3>
+					<ul class="nav nav-pills nav-addons">
+					<?php foreach ($staticBlocks as $block) : ?>
+					<li><label>
+							<input type="checkbox" value="<?php echo htmlentities(json_encode($block)) ?>" /> <?php echo $block['title'] ?>
+					</label></li>
+						<?php endforeach ?> 
+					</ul>
+				</div>
+				<?php endif; ?>
+				<div class="col-lg-6 child-block-wrapper">
+					<h3>Snippets <small class="small">(press button New Snippet or go to <em>T2 Theme > Manage Snippets</em> to create new snippet)</small> <span class="filtered-by label label-primary" style="display: none"></span></h3>
+					<ul id="add-on-blocks" class="nav nav-pills nav-addons">
+					
+					</ul>
+				</div>
+				<div class="col-lg-12">
+					<div class="alert alert-warning block-not-found" role="alert" style="display: none">
+						There is no block match search keyword!
+					</div>
+				</div>
+			</div> 
+		</div>
+		<div class="modal-footer">
+		<div class="col-xs-10 pull-left">
+			<div class="row">
+				<div class="col-xs-3"><label>Sub block column</label></div>
+				<div class="col-xs-2">
+					<select class="form-control input-sm grid-columns">
+						<option value="1">1 col</option>
+						<option value="2">2 col</option>
+						<option value="3">3 col</option>
+						<option value="4">4 col</option>
+						<option value="5">5 col</option>
+						<option value="6">6 col</option>
+						<option value="7">7 col</option>
+						<option value="8">8 col</option>
+						<option value="9">9 col</option>
+						<option value="10">10 col</option>
+						<option value="11">11 col</option>
+						<option value="12">12 col</option>
+					</select>
+				</div>
+				<div class="col-xs-4"><label>Sub block custom CSS class:</label></div>
+				<div class="col-xs-3"><input type="text" placeholder="cssCLASShere" class="input-sm form-control custom-class-input"></div>
+				 
+			</div>
+		</div>
+ 
+		<button type="button" class="btn btn-primary update-grid"><?php echo $this->__("Apply") ?></button>
+	  </div>
+	</div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<form class="form-horizontal" role="form">	
+	<div class="tab-content col-md-10">
+		<div class="tab-pane active" id="getstartedtitan">
+			<div class="panel panel-info" data-block="hidden-top" >
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/started.phtml')->toHtml() ?>
+			</div><!--./ GETTING STARTED -->
+		</div>
+		<div class="tab-pane" id="block_hidden-top">
+			<div class="panel panel-info" data-block="hidden-top" >
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/topbar.phtml')->toHtml() ?>
+			</div><!--./ TOP BAR -->
+		</div>
+		<div class="tab-pane" id="block_header">
+			<div class="panel panel-info" data-block="header">
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/header.phtml')->toHtml() ?>
+			</div><!-- HEADER -->
+		</div>
+		<div class="tab-pane" id="block_before_main_content">
+			<div class="panel panel-info"  data-block="before_main_content">
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/before_main_content.phtml')->toHtml() ?>
+			</div><!-- BEFORE MAIN CONTENT -->
+		</div>
+		<div class="tab-pane" id="block_maincontent">
+			<div class="panel panel-info"  data-block="maincontent">
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/main_content.phtml')->toHtml() ?>
+			</div><!--./ MAIN CONTENT -->
+		</div>
+		<div class="tab-pane" id="block_after_main_content">
+			<div class="panel panel-info"  data-block="after_main_content">
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/after_main_content.phtml')->toHtml() ?>
+			</div><!-- AFTER MAIN CONTENT -->
+		</div>
+		<div class="tab-pane" id="block_footer">
+			<div class="panel panel-info" data-block="footer">
+				<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/footer.phtml')->toHtml() ?>
+			</div><!--./ FOOTER -->
+		</div>
+		<div class="tab-pane" id="block_hidden-bottom">
+			<div class="panel panel-info" data-block="hidden-bottom">
+			  <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('titan/container/layout/bottom_bar.phtml')->toHtml() ?>
+			</div><!--./ STICKER/HIDDEN BOTTOM -->
+		</div>
+	</div>
+</form>

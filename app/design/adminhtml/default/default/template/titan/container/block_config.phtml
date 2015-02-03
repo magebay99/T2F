@@ -1,0 +1,19 @@
+<?php 
+$headerConfig = $this->getHeaderOrFooterBlock("header");
+$footerConfig = $this->getHeaderOrFooterBlock("footer");
+$beforeMainContent = $this->getOutsideMainContentBlock("before_main_content");
+$afterMainContent = $this->getOutsideMainContentBlock("after_main_content");
+$mainContent = $this->getHeaderOrFooterBlock("maincontent");
+//Hidden blocks
+$topBarBlock = $this->getHiddenBlock("top-bar");
+$bottomBarBlock = $this->getHiddenBlock("bottom-bar");
+$hiddenBlockConfig = array($topBarBlock, $bottomBarBlock);
+?>
+<div class="data-block-config">
+	<input type="hidden" value="<?php echo (!empty($headerConfig)) ? htmlentities(json_encode($headerConfig)) : ""; ?>" name="data-block[header]"/>
+	<input type="hidden" value="<?php echo (!empty($footerConfig)) ? htmlentities(json_encode($footerConfig)) : ""; ?>" name="data-block[footer]"/>
+	<input type="hidden" value="<?php echo (!empty($hiddenBlockConfig)) ? htmlentities(json_encode($hiddenBlockConfig)) : ""; ?>" name="data-block[hidden_blocks]"/>
+	<input type="hidden" value="<?php echo (isset($beforeMainContent['block_config'])) ? htmlentities(json_encode($beforeMainContent)) : ""; ?>" name="data-block[before_main_content]"/>
+	<input type="hidden" value="<?php echo (isset($afterMainContent['block_config'])) ? htmlentities(json_encode($afterMainContent)) : ""; ?>" name="data-block[after_main_content]"/>
+	<input type="hidden" value="<?php echo (!empty($mainContent)) ? htmlentities(json_encode($mainContent)) : ""; ?>" name="data-block[maincontent]"/>
+</div>

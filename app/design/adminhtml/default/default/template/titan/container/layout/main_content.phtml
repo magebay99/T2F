@@ -1,0 +1,47 @@
+<div class="panel-heading">
+	<div class="row">
+		<div class="col-lg-9"><h3 class="panel-title">SIDEBARs</h3><small>Enable to assign snippets into Left and Right side and will appear on all page with sidebar.</small></div>
+		<div class="col-lg-3 pull-right">
+			<div  class="btn-toolbar pull-right" role="toolbar">
+				<div class="btn-group">
+					<a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown">
+						Main Content Width <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu box-width" role="menu">
+						<li><a class="box-width-type" rel="t2-section">Boxed</a></li>
+						<li><a class="box-width-type" rel="t2-section-full">Full (padding 15px)</a></li>
+						<li><a class="box-width-type" rel="t2-section-full no-padding">Full (no padding)</a></li>
+					</ul>
+				</div>				
+				<div class="btn-group">
+					<button type="button" class="btn btn-success btn-xs btn-save-config"><?php echo $this->__("SAVE") ?></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel-body" id="maincontent">
+		<div class="col-lg-12">
+			<div class="row">
+				<div data-block="left" class="left" style="clear: both; position: relative; display: block; padding-top: 20px;"> 
+					<div class="col-lg-3 border-dash">
+						<p>
+							<span class="column-num">3 col</span>				
+						</p>
+					<a class="btn btn-default poper" data-toggle="modal" data-target=".bs-example-modal-lg" title="Manage Snippets"  ><i class="glyphicon glyphicon-cog"></i> <span><?php echo $this->__("Control");?></span></a>
+					<a class="btn btn-default remove-col" data-toggle="tooltip" title="Remove Sub Block"  ><i class="glyphicon glyphicon-remove-circle"></i> <span>Remove</span></a>
+					</div>
+				</div>
+				<div class="right"  data-block="right"  style="position: relative;"> 
+					<div class="col-lg-3 border-dash">
+						<p>
+						<span class="column-num">3 col</span>				
+						</p>
+					<a class="btn btn-default poper" data-toggle="modal" data-target=".bs-example-modal-lg" title="Manage Snippets"  ><i class="glyphicon glyphicon-cog"></i> <span><?php echo $this->__("Control");?></span></a>
+					<a class="btn btn-default remove-col" data-toggle="tooltip" title="Remove Sub Block"  ><i class="glyphicon glyphicon-remove-circle"></i> <span>Remove</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		 
+</div>

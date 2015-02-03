@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<titan_adminhtml_block_index>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/titan.js</name></action>
+			<action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addCss"><name>lib/prototype/windows/themes/magento.css</name></action>
+        </reference>
+		<reference name="content">
+			<block type="core/template" name="set_base_url" template="titan/baseurl.phtml"/>
+		</reference>
+	</titan_adminhtml_block_index>
+	<titan_adminhtml_layout_index>
+		<reference name="head">
+			<action method="addCss"><stylesheet>titan/bootstrap/css/bootstrap.css</stylesheet></action>
+			<action method="addCss"><stylesheet>titan/css/flat-ui.css</stylesheet></action>
+			<action method="addCss"><stylesheet>titan/css/customization.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery-ui-1.10.3.custom.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.touch-punch.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.draggable.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.sortable.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap-select.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap-modal-popover.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.placeholder.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/application.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/titan_controls.js</name></action>
+        </reference>
+		<reference name="content">
+			<block type="titan/main" name="t2_theme_tranform" template="titan/container.phtml">
+				<block type="titan/main" name="titan_layout" as="titan_layout" template="titan/container/layout.phtml"/>
+				<block type="titan/main" name="titan_controls_panel" as="titan_controls_panel" template="titan/container/controls_panel.phtml"/>
+				<block type="titan/main" name="titan_block_config_data" as="titan_block_config_data" template="titan/container/block_config.phtml"/>
+			</block>
+		</reference>
+	</titan_adminhtml_layout_index>
+</layout> 

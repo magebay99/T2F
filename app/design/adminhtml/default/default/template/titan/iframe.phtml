@@ -1,0 +1,48 @@
+<?php 
+$iframeSrc = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . "titan/index/index";
+?>
+<title>T2-Framework Settings</title> 
+<style>
+	#titan_layout {
+    background: none repeat scroll 0 0 #ecf0f1;
+    border: 0 solid #cccccc;
+    margin-top: 10px;
+    min-height: 1000px;
+		width: 100%;
+	}
+	#anchor-content{padding:0px;}
+	.tbtn {
+	  background: none repeat scroll 0 0 #2d3e50;
+	  color: #ffffff !important;
+	  cursor: pointer;
+	  font-size: 30px;
+	  height: 25px;
+	  left: 0;
+	  padding: 10px;
+	  position: fixed;
+	  right: auto;
+	  top: 40px;
+	  width: 45px;
+	}
+	.tbtn:before {
+	  font-size: 12px;
+	  height: 30px;
+	  left: 5px;
+	  position: absolute;
+	  text-align: right;
+	  top: 14px;
+	  width: 50px;
+	  content: '<< Back';
+	}
+</style>
+<?php 
+$currentUrl = Mage::helper('core/url')->getCurrentUrl();
+$dashboard = explode("key", $currentUrl);
+?>
+<iframe id="titan_layout" src="<?php echo $iframeSrc ?>" onload="javascript:resizeIframe(this);"></iframe>
+<script language="javascript" type="text/javascript">
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+<div class="loading progress-bar" id="loading-mask" style="display:none;"></div>
