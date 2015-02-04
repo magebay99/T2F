@@ -18,9 +18,14 @@ class MST_Titan_Adminhtml_LayoutController extends Mage_Adminhtml_Controller_Act
 			$tempArr = explode(".", $filename);
 			if (end($tempArr) == "json" && $_FILES['sample_data_file']['type'] == "application/octet-stream") {
 				$sampleJson = file_get_contents($_FILES['sample_data_file']['tmp_name']);
-				$importStatus = Mage::helper("titan/config")->importData($sampleJson);
-				//Zend_Debug::dump($importStatus);
-				Mage::getSingleton('core/session')->setTitanSuccessMessage(Mage::helper('titan')->__('<strong>Import successfully!</strong>'));
+				//Check is a valid json to import
+				$jsonContentDecoded = json_decode($sampleJson, true);
+				if (isset($jsonContentDecoded['blocks']) || isset($jsonContentDecoded['layout_builder']) || isset($jsonContentDecoded['static_blocks'])) {
+					$importStatus = Mage::helper("titan/config")->importData($sampleJson);
+					Mage::getSingleton('core/session')->setTitanSuccessMessage(Mage::helper('titan')->__('<strong>Import successfully!</strong>'));
+				} else {
+					Mage::getSingleton('core/session')->setTitanErrorMessage(Mage::helper('titan')->__('<strong>Import fail !</strong> Please upload a valid file in <strong>.json</strong> format!'));
+				}
 			} else {
 				Mage::getSingleton('core/session')->setTitanErrorMessage(Mage::helper('titan')->__('<strong>Import fail !</strong> Please upload a valid file in <strong>.json</strong> format!'));
 			}
