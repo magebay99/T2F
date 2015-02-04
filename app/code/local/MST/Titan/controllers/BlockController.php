@@ -4,7 +4,9 @@ class MST_Titan_BlockController extends Mage_Core_Controller_Front_Action
 	public function addBlockAction() 
 	{
 		if(Mage::getStoreConfig("design/package/name") != "t2") {
-			$note = "<div class='note'>You're not change design package to <strong>T2 THEME</strong> yet. Please go to <strong>System -> Configuration</strong>, choose <strong>Design</strong> tab and set <strong>Current Package Name</strong> = <strong>t2</strong>.</div>";
+			$note = "<div class='note' style='text-align: center;'>You're not change design package to <strong>T2 THEME</strong> yet. ";
+			$note .= "Please go to <strong>System -> Configuration</strong>, choose <strong>Design</strong> tab and set <strong>Current Package Name</strong> = <strong>t2</strong>.";
+			$note .= '<p><button style="background: #3b9bdc;color: white;cursor: pointer;font-size: 17px;font-weight: bold;padding: 4px 8px;" type="button" onclick="top.document.getElementById(\'add_block_iframe\').style.top = \'-100000px\';">Close</button></p></div>';
 			echo $note;
 		} else {
 			echo $block = $this->getLayout()->createBlock("titan/main")->setTemplate("titan/blocks/add_block.phtml")->toHtml();
