@@ -217,7 +217,7 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		$allBlock = array();
 		foreach($titanBlocks as $block) {
 			$blockData = $block->getData();
-			unset($blockData['id']);
+			//unset($blockData['id']);
 			$allBlock[] = $blockData;
 		}
 		return $allBlock;
@@ -247,7 +247,7 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 		if ($sampleJson != "") {
 			$sampleDataDecoded = json_decode($sampleJson, true);
 			//Import Blocks/Snippet
-			$result = $this->importBlocks($sampleDataDecoded);
+			$result = $this->importBlocksViaSql($sampleDataDecoded);
 			//Import layout builder
 			$layout_result = $this->importLayoutBuilder($sampleDataDecoded);
 			//Import static block
@@ -265,14 +265,6 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 			$response['message'] = "There is no block imported! Something went wrong";
 			$blocks = $sampleDataDecoded['blocks'];
 			$mainModel = Mage::getModel("titan/titanblock");
-			/**
-			$resource = Mage::getSingleton('core/resource');
-			$writeConnection = $resource->getConnection('core_write');
-			$blockTable = $resource->getTableName('mst_titan_blocks');
-			//Reset table
-			$resetSql = "TRUNCATE $blockTable";
-			$writeConnection->query($resetSql);
-			**/
 			try {
 				foreach($blocks as $_blockData) {
 					//unset($_blockData['id']);
@@ -285,6 +277,42 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 			}
 		}
 		return $response;
+	}
+	protected function importBlocksViaSql($sampleDataDecoded) {
+		$response = array();
+		if(isset($sampleDataDecoded['blocks'])) {
+			$response['status'] = "error";
+			$response['message'] = "There is no block imported! Something went wrong";
+			$blocks = $sampleDataDecoded['blocks'];
+			$mainModel = Mage::getModel("titan/titanblock");
+			$resource = Mage::getSingleton('core/resource');
+			$writeConnection = $resource->getConnection('core_write');
+			$blockTable = $resource->getTableName('mst_titan_blocks');
+			//Reset table
+			$resetSql = "TRUNCATE $blockTable;";
+			//$writeConnection->query($resetSql);
+			try {
+				$allSql = array();
+				foreach($blocks as $_blockData) {
+					$allSql[] = $this->prepareAddBlockSql($_blockData, $blockTable);
+				}
+				if(count($allSql)) {
+					$insertBlockSql = join("", $allSql);
+					$sql = $resetSql . $insertBlockSql;
+				}
+				$writeConnection->query($sql);
+				$response['status'] = "success";
+				$response['message'] = "All snippet imported successfully!";
+			} catch (Exception $e) {
+				
+			}
+		}
+		return $response;
+	}
+	public function prepareAddBlockSql($data, $tableName) {
+		$sql = "INSERT INTO $tableName (`id`, `title`, `block_name`, `block_type`, `path`, `layout_name`, `alias_name`, `group_id`, `status`, `position`, `description`, `custom_layout_update`, `store_view`)";
+		$sql .= "VALUES('".$data['id']."','".addslashes($data['title'])."', '".$data['block_name']."','".$data['block_type']."','".$data['path']."','".$data['layout_name']."','".$data['alias_name']."','".$data['group_id']."','".$data['status']."','".$data['position']."','".$data['description']."','".$data['custom_layout_update']."','".$data['store_view']."');";
+		return $sql;
 	}
 	protected function importLayoutBuilder($sampleDataDecoded) {
 		$response = array();
@@ -327,5 +355,27 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 			}
 		}
 		return $response;
+	}
+	public function autoImportFirstTime() {
+		//Find json file
+		$appDir = Mage::getBaseDir("app") . DS . "code" . DS . "local" . DS . "MST". DS . "Titan" . DS . "sql" . DS . "titantheme_setup" . DS;
+		if (is_dir($appDir)){
+			if ($dh = opendir($appDir)){
+				while (($file = readdir($dh)) !== false){
+					$tempArr = explode(".", $file);
+					if(end($tempArr) == "json") {
+						$jsonContent = file_get_contents($appDir . $file);
+						$jsonContentDecoded = json_decode($jsonContent, true);
+						if (isset($jsonContentDecoded['blocks']) || isset($jsonContentDecoded['layout_builder']) || isset($jsonContentDecoded['static_blocks'])) {
+							//Run import then delete this file
+							$this->importData($jsonContent);
+							unlink($appDir . $file);
+							break;
+						}
+					}
+				}
+				closedir($dh);
+			}
+		}
 	}
 } 

@@ -39,9 +39,27 @@
 		<div class="tab-content" id="mainTabContent">
 			<div id="mainLayout" class="tab-pane fade active in" >
 				<div class="col-md-10">
-					<div class="alert alert-success alert-dismissible" role="alert">
+					<?php 
+						$message = '<strong>Saved!</strong> Your configuration has been saved.'; 
+						$successMessage = Mage::getSingleton('core/session')->getTitanSuccessMessage();
+						if($successMessage != "") {
+							$message = $successMessage;
+							Mage::getSingleton('core/session')->setTitanSuccessMessage("");
+						}
+						$error = '<strong>Opp!</strong> Something went wrong.';
+						$errorMessage = Mage::getSingleton('core/session')->getTitanErrorMessage();
+						if($errorMessage != "") {
+							$error = $errorMessage;
+							Mage::getSingleton('core/session')->setTitanErrorMessage("");
+						}
+					?>
+					<div id="success_message" class="alert alert-success alert-dismissible" role="alert" style="<?php echo ($successMessage == "") ? "display: none;" : ""; ?>">
 					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					  <strong>Saved!</strong> Your configuration has been saved.
+					  <?php echo $message; ?>
+					</div>
+					<div id="error_message" class="alert alert-danger alert-dismissible" role="alert" style="<?php echo ($errorMessage == "") ? "display: none;" : ""; ?>">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  <?php echo $error; ?>
 					</div>
 				</div>
 				<?php echo $this->getBlockHtml("titan_layout"); ?>

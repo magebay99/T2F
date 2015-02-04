@@ -3,24 +3,23 @@ class MST_Titan_BlockController extends Mage_Core_Controller_Front_Action
 {
 	public function addBlockAction() 
 	{
-		$block = $this->getLayout()->createBlock("titan/main")->setTemplate("titan/blocks/add_block.phtml");
-		$blockHtml = $block->toHtml();
-		if($blockHtml == "") {
-			$note = "<div class='note'>You're not change design package to our theme yet. Please go to System->Configuration, choose Design tab and set Current Package Name = 't2'.</div>";
+		if(Mage::getStoreConfig("design/package/name") != "t2") {
+			$note = "<div class='note'>You're not change design package to <strong>T2 THEME</strong> yet. Please go to <strong>System -> Configuration</strong>, choose <strong>Design</strong> tab and set <strong>Current Package Name</strong> = <strong>t2</strong>.</div>";
 			echo $note;
+		} else {
+			echo $block = $this->getLayout()->createBlock("titan/main")->setTemplate("titan/blocks/add_block.phtml")->toHtml();
 		}
-		echo $blockHtml;
 	}
 	public function saveAction() {
 		$params = $this->getRequest()->getParams();
 		$helper = Mage::helper("titan");
+		if ($params['block_type'] == "") {
+			$params['block_type'] = "core/template";
+		}
 		$isValidBlock = $helper->checkValidBlock($params['block_type'], $params['path']);
 		$addBlock = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . "titan/block/addBlock";
 		if(isset($params['area'])) {
 			$addBlock .= "/area/transforming";
-		}
-		if ($params['block_type'] == "") {
-			$params['block_type'] = "core/template";
 		}
 		if (isset($params["group_id"])) {
 			$groupTags = join(",", $params['group_id']);
