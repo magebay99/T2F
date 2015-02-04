@@ -15,7 +15,7 @@ class MST_Titan_Model_Titanblock extends Mage_Core_Model_Abstract
 			$collection->addFieldToFilter("block_name", $data['block_name']);
 			if ($collection->count()) {
 				$response['status'] = "error";
-				$response['message'] = "This template file has been used. Please check item with ID = " . $collection->getFirstItem()->getId();
+				$response['message'] = "This template (" . $data['title'] .") has been used.";
 				return $response;
 			}
 		}

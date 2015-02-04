@@ -244,6 +244,10 @@ jQuery(function($) {
 								MBTitan.isAllConfigSaved();
 								if(!MBTitan.isHasUnSaveClass()) {
 									$("#loading-mask").hide();
+									$("#success_message").show();
+									setTimeout(function() {
+										$("#success_message").fadeOut('fast');
+									}, 2000);
 								}
 							} else {
 								alert(responseJson.message);
