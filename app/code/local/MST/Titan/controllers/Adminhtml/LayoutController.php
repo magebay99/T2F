@@ -5,7 +5,6 @@ class MST_Titan_Adminhtml_LayoutController extends Mage_Adminhtml_Controller_Act
 		return $this;
 	}	
 	public function indexAction() {	
-		Mage::helper("titan/config")->autoImportFirstTime();
 		$this->_initAction();		
 		$this->loadLayout();
 		$this->renderLayout();	
