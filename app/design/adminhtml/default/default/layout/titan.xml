@@ -21,6 +21,7 @@
 			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.touch-punch.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.draggable.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.sortable.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>titan/js/jquery.ui.droppable.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap-select.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>titan/js/bootstrap-modal-popover.js</name></action>

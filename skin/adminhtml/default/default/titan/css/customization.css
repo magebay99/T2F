@@ -339,3 +339,6 @@ border: gold dashed 2px!important;
     cursor: inherit;
     display: block;
 }
+.panel-info .header-top {
+	border-bottom: none;
+}

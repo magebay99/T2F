@@ -3,7 +3,8 @@ jQuery(function($) {
 		columnPrefix = "col-lg-",
 		gridWrapperClass = ".border-dash",
 		configEL = "a.btn.poper.active",
-		modalEL = '.bs-example-modal-lg',
+		modalEL = ".bs-example-modal-lg",
+		allBlockSelector = ".header-top, .header-mid, .header-bottom, .block1, .block2, .block3, .block4, .block5, .block6, .footer-top, .footer-mid, .footer-bottom",
 		placeholderContent = $("#placeholder_content").html();
 	MBTitan = {
 		chooseColumn : function () {
@@ -292,6 +293,7 @@ jQuery(function($) {
 				parentEl = $(this).closest("div.block-change");
 				parentEl.children().append(columnContent);
 				/* MBTitan.reInstancePopover(); */
+				MBTitan.enabledSortChildBlock();
 				MBTitan.unSave(e);
 			});
 		}(),
@@ -450,10 +452,23 @@ jQuery(function($) {
 			}
 		}(),
 		enabledSortChildBlock : function() {
+			//Drag and sort child-block
 			$(gridWrapperClass).sortable({
-				items: "div.btn.child-block"
+				items: "div.btn.child-block",
+				connectWith: gridWrapperClass,
+				stop : function(e, ui) {
+					MBTitan.unSave(e);
+				}
 			});
 			$(gridWrapperClass).disableSelection();
+			//Drag and sort placeholder_content
+			$(allBlockSelector).sortable({
+				items: "div.border-dash.col-lg-12",
+				connectWith: allBlockSelector,
+				stop : function(e, ui) {
+					MBTitan.unSave(e);
+				}
+			});
 		},
 		filterByGroup : function() {
 			var currentGroupId;
