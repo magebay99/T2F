@@ -6,6 +6,8 @@ jQuery(function($) {
 		modalEL = ".bs-example-modal-lg",
 		allBlockSelector = ".header-top, .header-mid, .header-bottom, .block1, .block2, .block3, .block4, .block5, .block6, .footer-top, .footer-mid, .footer-bottom",
 		placeholderContent = $("#placeholder_content").html();
+	var _allNewestSnippetJsonData = {},
+		_allNewestStaticBlockData = {};
 	MBTitan = {
 		chooseColumn : function () {
 			var parentContainer, columnNum;
@@ -68,18 +70,52 @@ jQuery(function($) {
 						this.checked = true;
 					}
 				});
+				//Filter snippet by store
+				MBTitan.filterSnippetByStoreId(MBTitan.getCurrentStoreId());
 			});
 			$(modalEL).on('hidden.bs.modal', function (e) {
 				$('a.btn.poper.active').removeClass("active");
 			});
 		}(),
 		getChildBlockHtml : function(blockJson, title) {
+			//Get config data from modal
+			var newestJsonData = MBTitan.reindexChildBlockData(blockJson);
+			var newestDecodeData = $.parseJSON(newestJsonData);
 			var childHTML = new Array();
 			childHTML.push('<div style="margin: 3px; cursor: move;" class="btn btn-info btn-xs child-block">');
-			childHTML.push('<span class="setting" style="display: none;">' + blockJson +'</span>');
-			childHTML.push('<span class="block-title">' + title + '</span>');
+			childHTML.push('<span class="setting" style="display: none;">' + newestJsonData +'</span>');
+			childHTML.push('<span class="block-title">' + newestDecodeData.title + '</span>');
 			childHTML.push('</div>');
 			return childHTML.join("");
+		},
+		reindexChildBlockData : function(blockJson) {
+			var decodeData = $.parseJSON(blockJson),
+				newestJson;
+			
+			if(decodeData.type == "custom") {
+				newestJson = _allNewestSnippetJsonData[decodeData.id];
+			} else {
+				newestJson = _allNewestStaticBlockData[decodeData.identifier];
+			}
+			return newestJson;
+		},
+		reindexChildBlockJsonData : function() {
+			var decodeData;
+			//Get all static block newest data
+			$.each($("#static_block_list li input"), function() {
+				decodeData = $.parseJSON($(this).val());
+				_allNewestStaticBlockData[decodeData.identifier] = $(this).val();
+			});
+			//Get snippets data from iframe
+			$('#add_block_iframe').load(function(){
+				$.each($( "#add_block_iframe").contents().find( "#add-on-blocks li input" ), function() {
+					decodeData = $.parseJSON($(this).val());
+					_allNewestSnippetJsonData[decodeData.id] = $(this).val();
+				})
+				//Data ready
+				MBTitan.initializeAllChildBlocks();
+				MBTitan.filterChildBlockByStore();
+			});
 		},
 		preparePopover : function () {
 			/* $('body').on('shown.bs.popover', '.poper', function () {
@@ -232,7 +268,8 @@ jQuery(function($) {
 					var finalBlockData = {
 						finalBlockConfig : finalLayout
 					}
-					MBTitan.sendRequest(requestUrl, JSON.stringify(finalBlockData), rootBlockData, widthConfig, function(response) {
+					var currentStore = $("#store_switcher").val();
+					MBTitan.sendRequest(requestUrl, JSON.stringify(finalBlockData), rootBlockData, widthConfig, currentStore, function(response) {
 						if (response == "" || response == "null") {
 							alert("Something when wrong!");
 							return;
@@ -310,14 +347,15 @@ jQuery(function($) {
 				}
 			});
 		}(),
-		sendRequest : function (url, config, rootBlock, width, callback) {
+		sendRequest : function (url, config, rootBlock, width, store, callback) {
         	$.ajax({
 				type : "POST",
 				url : url,
 				data : {
 					config : config, 
 					root_block : rootBlock,
-					width_config : width
+					width_config : width,
+					store : store
 				},
 				beforeSend : function () {										
 					$("#loading-mask").show();
@@ -473,16 +511,16 @@ jQuery(function($) {
 		filterByGroup : function() {
 			var currentGroupId;
 			$("#filter_block li").on("click", function() {
-				$("#filter_block li").removeClass("active");
+				$("#filter_block li.in-store").removeClass("active");
 				$(this).addClass("active");
 				currentGroupId = $(this).attr("rel");
 				if (currentGroupId == "") return false;
 				if(currentGroupId == "reset") {
 					$(".child-block-wrapper .filtered-by").hide();
-					$("#add-on-blocks li").show();
+					$("#add-on-blocks li.in-store").show();
 				} else {
-					$(".child-block-wrapper .filtered-by").text('Filtered by "' + $(this).text() + '"').show();
-					$("#add-on-blocks li").each(function() {
+					//$(".child-block-wrapper .filtered-by").text('Filtered by "' + $(this).text() + '"').show();
+					$("#add-on-blocks li.in-store").each(function() {
 						if ($(this).attr("rel") != "") {
 							var groupIds = $(this).attr("rel").split(",");
 							if($.inArray(currentGroupId, groupIds) == -1) {
@@ -496,33 +534,61 @@ jQuery(function($) {
 			});
 		}(),
 		filterByStore : function() {
-			var storeId;
+			var storeId,
+				listClass = ".control_panel_popup .nav-addons li";
 			$("#filter_block_by_store li").on("click", function() {
 				$("#filter_block_by_store li").removeClass("active");
 				$(this).addClass("active");
 				storeId = $(this).attr("rel");
-				if (storeId == "reset") {
-					$(".child-block-wrapper .filtered-by").hide();
-					$("#add-on-blocks li").show();
-					return false;
-				}
-				$(".child-block-wrapper .filtered-by").text('Show in "' + $(this).text() + '"').show();
-				$("#add-on-blocks li").each(function() {
-					if ($(this).attr("store") !== "") {
-						var storeIds = $(this).attr("store").split(",");
-						if($.inArray(storeId, storeIds) == -1 && $.inArray("0", storeIds) == -1) {
-							$(this).hide();
-						} else {
-							$(this).show();
-						}
-					} else {
-						//$(this).show();//For old data that have no store view setting.
-					}
-				});
+				MBTitan.filterSnippetByStoreId(storeId);
 			});
 		}(),
+		filterSnippetByStoreId : function(storeId) {
+			//return false;
+			var listClass = ".control_panel_popup .nav-addons li";
+			if (storeId == "reset") {
+				//$(".child-block-wrapper .filtered-by").hide();
+				$(listClass).show();
+				return false;
+			}
+			//$(".child-block-wrapper .filtered-by").text('Show in "' + $(this).text() + '"').show();
+			$(listClass).each(function() {
+				if ($(this).attr("store") !== "") {
+					var storeIds = $(this).attr("store").split(",");
+					if($.inArray(storeId, storeIds) == -1 && $.inArray("0", storeIds) == -1) {
+						$(this).hide();
+					} else {
+						$(this).show();
+						$(this).addClass("in-store");
+					}
+				} else {
+					//$(this).show();//For old data that have no store view setting.
+				}
+			});
+		},
 		searchAddons : function() {
 			var searchKey;
+			$("#find_addon").keyup(function() {
+				$(".block-not-found").hide();
+				searchKey = this.value.toLowerCase().replace(/\s/g,'');
+				$(".control_panel_popup .nav-addons li.in-store").show();
+				$(".control_panel_popup .nav-addons li.in-store label").each(function() {
+					if($(this).text() != "") {
+						if(!$(this).text().toLowerCase().replace(/\s/g,'').match(searchKey)) {
+							$(this).parent().hide();
+						}
+					}
+				});
+				if(!$(".control_panel_popup .nav-addons li.in-store:visible").length && searchKey != "") {
+					$(".block-not-found").show();
+				}
+			});
+		}(),
+		searchAddonsNew : function() {
+			/* var searchKey,
+				stores,
+				currentStore = $("#store_switcher").val(),
+				storeView;
 			$("#find_addon").keyup(function() {
 				$(".block-not-found").hide();
 				searchKey = this.value.toLowerCase().replace(/\s/g,'');
@@ -532,13 +598,23 @@ jQuery(function($) {
 						if(!$(this).text().toLowerCase().replace(/\s/g,'').match(searchKey)) {
 							$(this).parent().hide();
 						}
+						//filter by store
+						if (currentStore != 0) {
+							stores = $.parseJSON($(this).find("input").val());
+							if(stores.store_view !== undefined) {
+								storeViews = stores.store_view.split(",");
+								if ($.inArray(currentStore, storeViews) == -1) {
+									$(this).parent().hide();
+								}
+							}
+						}
 					}
 				});
 				if(!$(".control_panel_popup .nav-addons li:visible").length && searchKey != "") {
 					$(".block-not-found").show();
 				}
-			});
-		}(),
+			}); */
+		},
 		unSave : function(e) {
 			var element = $(e.target);
 			//Check if Appy btn in modal clicked
@@ -594,7 +670,41 @@ jQuery(function($) {
 					"overflow" : "hidden"
 				});
 			});
-		}()
+		}(),
+		switchStore : function() {
+			$("#store_switcher").change(function() {
+				if(MBTitan.isHasUnSaveClass()) {
+					if(!confirm("Please confirm site switching. All data that hasn't been saved will be lost")) {
+						return;
+					}
+				}
+				$("#switch_store_form").submit();
+			});
+		}(),
+		filterChildBlockByStore : function() {
+			var currentStore = MBTitan.getCurrentStoreId(),
+				decodeData,
+				storeId,
+				storeView;
+			//Filter child block in layout
+			$(".btn-info.child-block .setting").each(function() {
+				decodeData = $.parseJSON($(this).text());
+				if(decodeData.type == "custom") {
+					storeView = decodeData.store_view.split(",");
+					if($.inArray(currentStore, storeView) == -1) {
+						$(this).closest("div.child-block").hide();
+					}
+				} else {
+					storeId = decodeData.store_id;
+					if(storeId != currentStore && storeId != 0) {
+						$(this).closest("div.child-block").hide();
+					}
+				}
+			});
+		},
+		getCurrentStoreId : function() {
+			return $("#store_switcher").val();
+		}
 	}
-	MBTitan.initializeAllChildBlocks();
+	MBTitan.reindexChildBlockJsonData();
 });

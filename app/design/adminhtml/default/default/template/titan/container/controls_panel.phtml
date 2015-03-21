@@ -28,7 +28,7 @@
 							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown">
+							<li class="dropdown" style="display: none;">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter by store<span class="caret"></span></a>
 								<?php 
 									$store_info = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true); 
@@ -68,9 +68,9 @@
 				<?php if(count($staticBlocks)>0) : ?>
 				<div class="col-lg-6">
 					<h3>CMS Static Blocks</h3>
-					<ul class="nav nav-pills nav-addons">
+					<ul id="static_block_list" class="nav nav-pills nav-addons">
 					<?php foreach ($staticBlocks as $block) : ?>
-					<li><label>
+					<li store="<?php echo $block['store_id'] ?>"><label>
 							<input type="checkbox" value="<?php echo htmlentities(json_encode($block)) ?>" /> <?php echo $block['title'] ?>
 					</label></li>
 						<?php endforeach ?> 
@@ -79,6 +79,7 @@
 				<?php endif; ?>
 				<div class="col-lg-6 child-block-wrapper">
 					<h3>Snippets <small class="small">(press button New Snippet or go to <em>T2 Theme > Manage Snippets</em> to create new snippet)</small> <span class="filtered-by label label-primary" style="display: none"></span></h3>
+					<?php //data from add_block.phtml in design/frontend ?>
 					<ul id="add-on-blocks" class="nav nav-pills nav-addons">
 					
 					</ul>

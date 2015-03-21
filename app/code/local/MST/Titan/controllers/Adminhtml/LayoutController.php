@@ -32,4 +32,9 @@ class MST_Titan_Adminhtml_LayoutController extends Mage_Adminhtml_Controller_Act
 		}
 		$this->_redirect('*/*/index');
 	}
+	public function switchStoreAction() {
+		$params = $this->getRequest()->getParams();
+		Mage::getSingleton('core/session')->setCurrentTitanStore($params['store']);
+		$this->_redirect('*/*/index');
+	}
 }

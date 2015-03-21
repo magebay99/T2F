@@ -44,11 +44,20 @@ class MST_Titan_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 	public function getStaticBlocks () {
 		$collection = Mage::getModel("cms/block")->getCollection();
+		$collection->getSelect()->join(
+			array('static_block_table' => $collection->getTable('cms/block_store')),
+			'static_block_table.block_id = main_table.block_id',
+			array('store_id')
+		);
+		/* if ($this->getCurrentTitanStore() != 0) {
+			$collection->addStoreFilter($this->getCurrentTitanStore());
+		} */
 		$staticBlocks = array();
 		foreach($collection as $value)
 		{
 			if($value->getIsActive() == true){
-				$staticBlocks[$value->getIdentifier()] = $value->getTitle();
+				//$staticBlocks[$value->getIdentifier()] = $value->getTitle();
+				$staticBlocks[$value->getBlockId()] = array('title' => $value->getTitle(), 'store_id' => $value->getStoreId());
 			}
 		}
 		return $staticBlocks;
@@ -110,5 +119,39 @@ class MST_Titan_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 		return "";
+	}
+	/*Store switcher dropdown*/
+    public function storeSwitcher()
+    {
+    	$store_info=Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true);
+		$store_switcher="";
+		$currentTitanStore = $this->getCurrentTitanStore();
+		$store_switcher.="<select name='store' id='store_switcher'>";
+			foreach($store_info as $value){
+				if($value['value']==0){
+					$store_switcher.="<option value='0'>".$value['label']."</option>";
+				}else{
+					$store_switcher.="<optgroup label='".$value['label']."'></optgroup>";
+					if(!empty($value['value'])){
+						foreach ($value['value'] as $option){
+							$_selected = "";
+							if ($currentTitanStore == $option['value']) {
+								$_selected = "selected='selected'";
+							}
+							$store_switcher.="<option ". $_selected ." value='".$option['value']."'>&nbsp;&nbsp;&nbsp;&nbsp;".$option['label']."</option>";
+						}
+					}
+				}
+			}
+		$store_switcher.="</select>";
+		return $store_switcher;
+    }
+	public function getCurrentTitanStore() {
+		$currentStore = 0;
+		$_storeInSession = Mage::getSingleton('core/session')->getCurrentTitanStore();
+		if ($_storeInSession != "") {
+			$currentStore = $_storeInSession;
+		}
+		return $currentStore;
 	}
 }

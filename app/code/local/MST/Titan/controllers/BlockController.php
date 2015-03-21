@@ -60,8 +60,9 @@ class MST_Titan_BlockController extends Mage_Core_Controller_Front_Action
 				if(isset($params['area'])) {
 					$addBlock .= "/block-id/" . $response['block_id'];
 				}
-				Mage::app()->getResponse()->setRedirect($addBlock)->sendResponse();
-				//$this->getResponse()->setBody("<script>window.top.Windows.closeAll();</script>");
+				$this->getResponse()->setBody("<script>window.top.Windows.closeAll();</script>");
+				//Mage::app()->getResponse()->setRedirect($addBlock)->sendResponse();
+				
 				return;
 			} else {
 				Mage::getSingleton('core/session')->addError($helper->__($response['message']));

@@ -7,7 +7,18 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8">
-		  	<div class="note" style="display: none;"><!--Push buttons on right--></div>
+			<div class="col-md-3">
+				<div class="switch-store">
+					<span><?php echo $this->__("Choose Store View") ?> : </span>
+					<form id="switch_store_form" action="<?php echo Mage::helper("adminhtml")->getUrl("titan/adminhtml_layout/switchstore")?>">
+						<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+						<?php echo Mage::helper("titan")->storeSwitcher(); ?>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="note" style="display: none;"><!--Push buttons on right--></div>
+			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="pull-right">

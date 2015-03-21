@@ -49,11 +49,12 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 	public function getAllStaticBlocks() {
 		$allStaticBlocks = array();
 		$staticBlocks = $this->helper('titan')->getStaticBlocks();
-		foreach ($staticBlocks as $identifier => $title) {
+		foreach ($staticBlocks as $identifier => $blockInfo) {
 			$allStaticBlocks[] = array(
 				"type" => "static_block",
-				"title" => $title,
-				"identifier" => $identifier
+				"title" => $blockInfo['title'],
+				"identifier" => $identifier,
+				"store_id" => $blockInfo['store_id']
 			);
 		}
 		return $allStaticBlocks;
