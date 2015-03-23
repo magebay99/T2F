@@ -82,10 +82,12 @@ jQuery(function($) {
 			var newestJsonData = MBTitan.reindexChildBlockData(blockJson);
 			var newestDecodeData = $.parseJSON(newestJsonData);
 			var childHTML = new Array();
-			childHTML.push('<div style="margin: 3px; cursor: move;" class="btn btn-info btn-xs child-block">');
-			childHTML.push('<span class="setting" style="display: none;">' + newestJsonData +'</span>');
-			childHTML.push('<span class="block-title">' + newestDecodeData.title + '</span>');
-			childHTML.push('</div>');
+			if (newestDecodeData !== null) {
+				childHTML.push('<div style="margin: 3px; cursor: move;" class="btn btn-info btn-xs child-block">');
+				childHTML.push('<span class="setting" style="display: none;">' + newestJsonData +'</span>');
+				childHTML.push('<span class="block-title">' + newestDecodeData.title + '</span>');
+				childHTML.push('</div>');
+			}
 			return childHTML.join("");
 		},
 		reindexChildBlockData : function(blockJson) {
