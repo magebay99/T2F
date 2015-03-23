@@ -693,7 +693,7 @@ jQuery(function($) {
 				decodeData = $.parseJSON($(this).text());
 				if(decodeData.type == "custom") {
 					storeView = decodeData.store_view.split(",");
-					if($.inArray(currentStore, storeView) == -1) {
+					if($.inArray(currentStore, storeView) == -1 && $.inArray("0", storeView) == -1) {
 						$(this).closest("div.child-block").hide();
 					}
 				} else {
