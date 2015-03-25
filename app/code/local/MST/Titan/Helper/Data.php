@@ -147,10 +147,13 @@ class MST_Titan_Helper_Data extends Mage_Core_Helper_Abstract
 		return $store_switcher;
     }
 	public function getCurrentTitanStore() {
-		$currentStore = 0;
-		$_storeInSession = Mage::getSingleton('core/session')->getCurrentTitanStore();
-		if ($_storeInSession != "") {
-			$currentStore = $_storeInSession;
+		$currentStore = Mage::app()->getStore()->getStoreId();
+		if($currentStore == 0) {
+			//Check titan from switch store in backend
+			$_storeInSession = Mage::getSingleton('core/session')->getCurrentTitanStore();
+			if ($_storeInSession != "") {
+				$currentStore = $_storeInSession;
+			}
 		}
 		return $currentStore;
 	}
