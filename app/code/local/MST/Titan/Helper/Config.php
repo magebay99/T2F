@@ -13,6 +13,9 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 	public function getThemeLayout() {
 		return $this->getStoreConfig("titan/general/theme_layout");
 	}
+	public function getThemeWidth() {
+		return $this->getStoreConfig("titan/general/theme_width");
+	}
 	public function getThemeStyle() {
 		return $this->getStoreConfig("titan/general/theme_style");
 	}
