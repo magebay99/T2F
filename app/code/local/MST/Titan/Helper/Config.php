@@ -349,6 +349,10 @@ class MST_Titan_Helper_Config extends Mage_Core_Helper_Abstract {
 					if($staticBlockModel->load($_staticBlockData['identifier'])->getId() != null) {
 						continue;
 					}
+					if(isset($_staticBlockData['store_id'])) {
+						unset($_staticBlockData['store_id']);
+					}
+					$_staticBlockData['stores'] = array(0);//available all store view
 					$staticBlockModel->setData($_staticBlockData)->save();
 				}
 				$response['status'] = "success";
