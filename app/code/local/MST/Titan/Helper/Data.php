@@ -49,6 +49,8 @@ class MST_Titan_Helper_Data extends Mage_Core_Helper_Abstract
 			'static_block_table.block_id = main_table.block_id',
 			array('store_id')
 		);
+		//Filter by titan store, if not, there will be same ID error
+		$collection->addStoreFilter($this->getCurrentTitanStore());
 		/* if ($this->getCurrentTitanStore() != 0) {
 			$collection->addStoreFilter($this->getCurrentTitanStore());
 		} */
