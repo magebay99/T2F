@@ -53,7 +53,8 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 			$allStaticBlocks[] = array(
 				"type" => "static_block",
 				"title" => $blockInfo['title'],
-				"identifier" => $identifier,
+				"identifier" => $identifier,//Need this code, cause block ID will have problem when import to another site
+				"block_id" => $blockInfo['block_id'],
 				"store_id" => $blockInfo['store_id']
 			);
 		}
@@ -67,7 +68,8 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 				return false;
 			} 
 		} else {
-			if (!Mage::getModel('cms/block')->load($childBlockInfo['identifier'])->getIsActive()) {
+			$staticBlock = Mage::getModel('cms/block')->setStoreId(Mage::app()->getStore()->getId())->load($childBlockInfo['identifier']);//Use identifier instead of ID, otherwise will cause error when export/import
+			if (!$staticBlock->getIsActive()) {
 				return false;
 			}
 		}

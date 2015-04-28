@@ -59,7 +59,11 @@ class MST_Titan_Helper_Data extends Mage_Core_Helper_Abstract
 		{
 			if($value->getIsActive() == true){
 				//$staticBlocks[$value->getIdentifier()] = $value->getTitle();
-				$staticBlocks[$value->getBlockId()] = array('title' => $value->getTitle(), 'store_id' => $value->getStoreId());
+				$staticBlocks[$value->getIdentifier()] = array(
+					'title' => $value->getTitle(), 
+					'store_id' => $value->getStoreId(), 
+					'block_id' => $value->getBlockId()
+				);
 			}
 		}
 		return $staticBlocks;
