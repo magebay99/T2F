@@ -218,7 +218,9 @@ class MST_Titan_Block_Main extends Mage_Core_Block_Template {
 				try {
 					$blockParams = json_decode($blockInfo['description'], true);
 					if (is_array($blockParams)) {
-						$block->setData($blockParams);
+						if($block) {
+							$block->setData($blockParams);
+						}
 					}
 				} catch(Exception $e) {
 					
