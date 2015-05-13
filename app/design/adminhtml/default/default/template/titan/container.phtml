@@ -82,10 +82,10 @@
 	<div class="progress-bar" style="display: none;">
 		<div class="bar"><i class="sphere"></i></div>
 	</div>
-	<input type="hidden" id="baseurl" value="<?php echo $this->getBaseUrl(); ?>"/>
+	<input type="hidden" id="baseurl" value="<?php echo Mage::helper("titan")->getBaseUrl();?>"/>
 	<input type="hidden" id="current_tab" value="<?php echo $this->getRequest()->getParam("tab") ?>"/>
 	<!-- ADD BLOCK IFRAME -->
-	<iframe id="add_block_iframe" src="<?php echo $this->getBaseUrl(); ?>titan/block/addBlock/new/yes/area/transforming" style="position: fixed; top: -100000px;left:-99999px;"></iframe>
+	<iframe id="add_block_iframe" src="<?php echo Mage::helper("titan")->getBaseUrl(); ?>titan/block/addBlock/new/yes/area/transforming" style="position: fixed; top: -100000px;left:-99999px;"></iframe>
 </div>
 <script>
 //Fix conflict Prototype vs Bootstrap + jQuery
